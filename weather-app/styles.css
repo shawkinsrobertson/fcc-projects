@@ -1,0 +1,179 @@
+* {
+  font-family: "Teachers", "sans-serif";
+}
+p {
+  margin-bottom: 0px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3.5rem;
+}
+
+h2{
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+#main-card {
+  padding: 20px;
+  max-width: 850px;
+  height: 80%vh;
+  margin: 0 auto;
+}
+
+#location-selectors {
+  display: flex;
+  justify-content: space-around;
+}
+
+#location-dropdown {
+  width: 25%;
+  border-radius: 4px;
+  border: 0.5px solid #d0d0d0;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 1rem;
+}
+
+#get-weather-btn {
+  font-size: 1.2rem;
+  width: 25%;
+  border-radius: 4px;
+  border: none;
+  background-color: rgb(149, 238, 222);
+  color: rgb(0, 74, 54);
+}
+
+#unit-conversion-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.toggle {
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: #ccc;
+  position: relative;
+  cursor: pointer;
+}
+
+.toggle::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 26px;
+  width: 26px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+label {
+  margin: 8px;
+}
+
+#unit-switch {
+  display: none;
+}
+
+#unit-switch:checked + .toggle {
+  background-color: rgb(149, 238, 222);
+}
+
+#unit-switch:checked + .toggle::before {
+  left: 32px;
+}
+
+#main-stats {
+  text-align: center;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 16px auto;
+  box-shadow: 2px 2px 8px #dbdbdb;
+}
+
+#main-and-icon {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+#weather-icon {
+  height: 150px;
+  width: 150px;
+}
+
+#temp-and-feels {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+#feels-like {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+#secondary-stats{
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-around;
+  
+}
+
+.humidity {
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px #dbdbdb;
+  margin-bottom: 4px;
+  text-align: center;
+  width: 45%;
+}
+
+#humidity {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+#wind-stats {
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 2px;
+  text-align: center;
+  width: 45%;
+}
+
+.wind-speed {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wind-gust {
+  display: flex;
+  flex-direction: column;
+}
+
+#wind {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+#wind-gust {
+  font-weight: 500;
+  margin-top: 0;
+}

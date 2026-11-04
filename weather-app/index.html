@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css">
+    <title>Weather App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Oxanium:wght@200..800&family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
+    </style>
+  </head>
+
+  <body>
+    <div id="location-selectors">
+      <select id="location-dropdown">
+        <option value="" name="">Select a city</option>
+        <option value="new york" name="new-york">New York</option>
+        <option value="los angeles" name="los-angeles">Los Angeles</option>
+        <option value="chicago" name="chicago">Chicago</option>
+        <option value="paris" name="paris">Paris</option>
+        <option value="tokyo" name="tokyo">Tokyo</option>
+        <option value="london" name="london">London</option>
+      </select>
+      <button id="get-weather-btn">get forecast</button>
+      <div id="unit-conversion-toggle">
+        <span>C</span>
+        <input type="checkbox" id="unit-switch">
+        <label for="unit-switch" class="toggle"></label>
+        <span>F</span>
+      </div>
+    </div>
+    <div id="main-card">
+    <h1 id="location"></h1>
+    <div id="main-stats">
+      <div id="main-and-icon">
+        <p id="weather-main"></p>
+      <img id="weather-icon" src="" alt="" />
+      </div>
+      <div id="temp-and-feels">
+        <h2 id="main-temperature"></h2>
+      <p id="feels-like"></p>
+      </div>
+    </div>
+    <div id="secondary-stats">
+      <div class="humidity">
+      <p id="humid-label">humidity</p>
+      <div id="humidity"></div>
+      </div>
+      <div id="wind-stats">
+        <div class="wind-speed">
+          <p id="wind-description">wind speed</p>
+          <h3 id="wind"></h3>
+        </div>
+        <div class="wind-gust">
+          <p id="gust-label">with gusts of</p>
+          <p id="wind-gust"></p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
