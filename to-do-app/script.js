@@ -3,6 +3,8 @@
 // form and containers
 const taskForm = document.getElementById('task-form');
 const tasksContainer = document.getElementById('tasks-container');
+const sidebar = document.querySelector('.menu-sidebar');
+const tasks = document.querySelectorAll('.task');
 
 
 //buttons
@@ -86,8 +88,9 @@ const updateTaskContainer = () => {
             <p><strong>Title:</strong>${title}</p>
             <p><strong>Date:</strong>${date}</p>
             <p><strong>Description:</strong>${description}</p>
-            <button type='button' class='btn' onclick =editTask(this)>Edit</button>
-            <button type='button' class='btn' onclick =deleteTask(this)>Delete</button>
+                <button type='button' class='btn' onclick =editTask(this)>Edit</button>
+                <button type='button' class='btn' onclick =deleteTask(this)>Delete</button>
+
         </div>
     `)
 };
@@ -115,3 +118,9 @@ taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
     addOrUpdateTask();
 });
+
+
+//expand/collapse sidebar on click, change logo/hamburger menu/close icon display
+// sidebar.addEventListener('click',)
+
+// listen for key input on project and list inputs, search current projects/lists, create new if no matching entries

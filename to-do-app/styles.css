@@ -1,9 +1,9 @@
 :root {
-  --white: #fff;
-  --light-grey: #f5f6f7;
-  --dark-grey: #0a0a23;
-  --yellow: #f1be32;
-  --golden-yellow: #feac32;
+  --bg:white;
+  --accent: rgb(25, 84, 194);
+  --text: rgb(67, 67, 67);
+  --text-s: rgb(148, 148, 148);
+  --shadow: 0.5px 0px 4px rgb(67, 67, 67, 0.3);
 }
 
 *,
@@ -15,51 +15,89 @@
 }
 
 body {
-  background-color: var(--dark-grey);
+  background-color: var(--bg);
 }
 
 main {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+  gap: 24px;
+} 
 
 h1 {
-  color: var(--light-grey);
-  margin: 20px 0 40px 0;
+  color: var(--text);
 }
 
 .todo-app {
-  background-color: var(--white);
-  width: 300px;
-  height: 350px;
-  border: 5px solid var(--yellow);
-  border-radius: 8px;
+  margin: auto;
+  background-color: var(--bg);
+  height:100vh;
   padding: 15px;
-  position: relative;
   display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
   gap: 10px;
+}
+
+.logo {
+  height: 100px;
+  width: 100px;
+  max-width: 200px;
+  max-height: 200px;
+  background-color: lightskyblue;
+  border-radius: 25px;
+  margin-bottom: 40px;
+}
+
+.menu-sidebar {
+  margin: 0 auto;
+  padding: 24px;
+  height: 100vh;
+  max-width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  flex: 0 0 250px;
+  transition: flex-basis 0.3s ease;
+  border-right: 0.5px solid rgb(213, 236, 255);
+  box-shadow: 8px 0 8px -8px rgba(2, 45, 64, 0.3);
+}
+
+.menu-sidebar.collapsed {
+  flex-basis: 68px; /* menu icon size*/
+}
+
+.title-and-primarybtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
 }
 
 .btn {
   cursor: pointer;
   width: 100px;
   margin: 10px;
-  color: var(--dark-grey);
-  background-color: var(--golden-yellow);
-  background-image: linear-gradient(#fecc4c, #ffac33);
-  border-color: var(--golden-yellow);
-  border-width: 3px;
+  padding:  8px;
+  color: var(--accent);
+  background-color: var(--bg);
+  border-color: var(--bg);
+  box-shadow: var(--shadow);
+  border-width: 1px;
+  border-radius: 8px;
+  transition: ease-in-out 200ms; 
 }
 
 .btn:hover {
-  background-image: linear-gradient(#ffcc4c, #f89808);
+  border: 1px solid var(--accent);
 }
 
 .large-btn {
-  width: 80%;
+  width: 40%;
+  border: 1px solid var(--bg);
   font-size: 1.2rem;
   align-self: center;
   justify-self: center;
@@ -82,11 +120,11 @@ h1 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--white);
-  border-radius: 5px;
+  background-color: var(--bg);
+  border: 0.5px solid rgba(2, 45, 64, 0.3);
+  box-shadow: 8px 8px 8px -8px rgba(2, 45, 64, 0.3);
+  border-radius: 8px;
   padding: 15px;
-  width: 300px;
-  height: 350px;
   flex-direction: column;
   justify-content: space-between;
   overflow: auto;
@@ -152,18 +190,30 @@ h1 {
 }
 
 .task {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: var(--bg);
+  border: 0.5px solid rgba(2, 45, 64, 0.3);
+  box-shadow: 8px 8px 8px -8px rgba(2, 45, 64, 0.3);
+  border-radius: 8px;
+  padding: 15px;
   margin: 5px 0;
 }
+
 
 .hidden {
   display: none;
 }
 
-@media (min-width: 576px) {
+
+/* RESPONSIVENESS */
+
+@media (max-width: 576px) {
   .todo-app,
   .task-form {
-    width: 400px;
-    height: 450px;
+    max-width: 80%;
+    
   }
 
   .task-form-label {
