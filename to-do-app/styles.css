@@ -116,10 +116,6 @@ h1 {
 
 .task-form {
   display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: var(--bg);
   border: 0.5px solid rgba(2, 45, 64, 0.3);
   box-shadow: 8px 8px 8px -8px rgba(2, 45, 64, 0.3);
@@ -127,7 +123,6 @@ h1 {
   padding: 15px;
   flex-direction: column;
   justify-content: space-between;
-  overflow: auto;
 }
 
 .task-form-header {
@@ -142,15 +137,27 @@ h1 {
 }
 
 .task-form-footer {
-  display: flex;
+  display: inline-block;
   justify-content: center;
 }
 
 .task-form-label,
 #title-input,
 #date-input,
+#project-input,
+#list-input,
+#parent-input,
 #description-input {
-  display: block;
+  display: inline;
+}
+
+.form-name, 
+.form-date-project, 
+.form-list-parent, 
+.form-description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .task-form-label {

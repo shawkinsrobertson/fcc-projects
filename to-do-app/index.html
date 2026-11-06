@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn localStorage by Building a Todo App</title>
+  <title>Do Shit</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -15,45 +15,45 @@
       <div class="logo"></div>
       <div class="projects">
         <h3>Projects</h3>
-        <div class="project-list">
-          <p>sample project 1</p>
-          <p>sample project 2</p>
+        <button id="delete-projects-btn" class="btn">delete projects</button>
+        <div id="project-container">
+          
         </div>
       </div>
       <div class="lists">
         <h3>Lists</h3>
-        <div class="list-collection">
-          <p>sample list 1</p>
-          <p>sample list 2</p>
+        <button id="delete-lists-btn" class="btn">delete lists</button>
+        <div id="list-container">
+          
         </div>
       </div>
     </div>
     <div class="todo-app">
       <div class="title-and-primarybtn">
-        <h1>Todo App</h1>
+        <h1>Do Shit</h1>
       <button id="open-task-form-btn" class="btn large-btn">
         Add New Task
       </button>
       </div>
-      <form class="task-form hidden" id="task-form">
+      <form class="task-form" id="task-form">
         <div class="task-form-header">
           <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">
             <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
           </button>
         </div>
         <div class="task-form-body">
-          <label class="task-form-label" for="title-input">Title</label>
-          <input required type="text" class="form-control" id="title-input" value="" />
-          <label class="task-form-label" for="date-input">Date</label>
-          <input type="date" class="form-control" id="date-input" value="" />
-          <label class="task-form-label" for="project-input">Project</label>
-          <input type="text" class="form-control" id="project-input" value="" />
-          <label class="task-form-label" for="list-input">List</label>
-          <input type="text" class="form-control" id="list-input" value="" />
-          <label class="task-form-label" for="parent-input">Parent task?</label>
-          <input type="text" class="form-control" id="parent-input" value="" />
-          <label class="task-form-label" for="description-input">Description</label>
-          <textarea class="form-control" id="description-input" cols="30" rows="5"></textarea>
+            <label class="task-form-label" for="title-input">Name</label>
+            <input required type="text" class="form-control" id="title-input" value="" />
+            <label class="task-form-label" for="date-input">Date</label>
+            <input type="date" class="form-control" id="date-input" value="" />
+            <label class="task-form-label" for="project-input">Project</label>
+            <input type="text" class="form-control" id="project-input" value="" />
+            <label class="task-form-label" for="list-input">List</label>
+            <input type="text" class="form-control" id="list-input" value="" />
+            <label class="task-form-label" for="parent-input">Parent task?</label>
+            <input type="text" class="form-control" id="parent-input" value="" />
+             <label class="task-form-label" for="description-input">Description</label>
+            <textarea class="form-control" id="description-input" cols="30" rows="5"></textarea>
         </div>
         <div class="task-form-footer">
           <button id="add-or-update-task-btn" class="btn large-btn" type="submit">
