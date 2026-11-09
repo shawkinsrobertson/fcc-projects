@@ -70,6 +70,27 @@ h1 {
   flex-basis: 68px; /* menu icon size*/
 }
 
+.form-btn-div {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+#project-dashboard, #list-dashboard {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: center;
+  padding: 24px, 16px;
+}
+
+.filtered-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
 .title-and-primarybtn {
   display: flex;
   align-items: center;
@@ -114,7 +135,7 @@ h1 {
   height: 20px;
 }
 
-.task-form {
+.task-form, .project-form, .list-form {
   display: flex;
   background-color: var(--bg);
   border: 0.5px solid rgba(2, 45, 64, 0.3);
@@ -136,18 +157,24 @@ h1 {
   justify-content: space-around;
 }
 
-.task-form-footer {
+.form-footer {
   display: inline-block;
   justify-content: center;
 }
 
-.task-form-label,
-#title-input,
-#date-input,
-#project-input,
-#list-input,
-#parent-input,
-#description-input {
+.form-label,
+#task-title-input,
+#task-date-input,
+#task-project-input,
+#task-list-input,
+#task-parent-input,
+#task-description-input,
+#project-title-input,
+#project-date-input,
+#project-description-input,
+#list-title-input,
+#list-date-input,
+#list-description-input {
   display: inline;
 }
 
@@ -160,15 +187,21 @@ h1 {
   gap: 8px;
 }
 
-.task-form-label {
+.form-label {
   margin-bottom: 5px;
   font-size: 1.3rem;
   font-weight: bold;
 }
 
-#title-input,
-#date-input,
-#description-input {
+#task-title-input,
+#task-date-input,
+#task-description-input,
+#project-title-input,
+#project-date-input,
+#project-description-input,
+#list-title-input,
+#list-date-input,
+#list-description-input {
   width: 100%;
   margin-bottom: 10px;
   padding: 2px;
@@ -223,18 +256,28 @@ h1 {
     
   }
 
-  .task-form-label {
+  .form-label {
     font-size: 1.5rem;
   }
 
-  #title-input,
-  #date-input {
+  #task-title-input,
+  #task-date-input,
+  #project-title-input,
+  #project-date-input,
+  #list-title-input,
+  #list-date-input {
     height: 2rem;
   }
 
-  #title-input,
-  #date-input,
-  #description-input {
+  #task-title-input,
+  #task-date-input,
+  #task-description-input,
+  #project-title-input,
+  #project-date-input,
+  #project-description-input,
+  #list-title-input,
+  #list-date-input,
+  #list-description-input {
     padding: 5px;
     margin-bottom: 20px;
   }
