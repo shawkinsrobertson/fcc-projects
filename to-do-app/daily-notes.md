@@ -2,11 +2,35 @@
 
 ## JTBD (end date: 11/06/2026)
 - [ ] Write rules for data handling and behavior (see ?s to build toward)
-- [ ] Write through logic/behavior for project create/edit/delete, list create/edit/delete, leftover task destinations
+- [x] Write through logic/behavior for project create/edit/delete, list create/edit/delete, leftover task destinations
 - [ ] Test behavior functions
-- [ ] Render everything to UI or log to console to see each step and what breaks
+- [x] Render everything to UI or log to console to see each step and what breaks
 - [ ] Write errors, dialogues, and empty states
 - [ ] UI: architecture, affordances, validation, layout, animations, responsiveness
+
+----------------------------------------------------------------------------------------------
+
+### 11/10/2026
+- Created
+  - `editList()`, `deleteList()`, `updateDashboard(type)`, and updated `reset()` function to take type 'project' or 'list'. 
+  - Close form buttons for project and list forms w/ event listeners.
+  - Logic in `deleteList()` and `deleteProject()` that goes through `taskData` and removes project or list from tasks that match one being deleted.
+  - Organized script.js code for easier navigation and readability. 
+
+- Fixed
+  - `editProject()`, `editList()` edit the project and list data and update the UI.
+  - Updated `renderProject()` and `renderList()` to include the description line when rendering, and changed the description textarea to a paragraph element for rendering.
+
+- Bugs
+  - `reset()` on the `discardBtn` does not reset by type. Causing UI issues.
+  - After editing a task inside a project the task-container is visible under the filtered task list.
+
+- Needs testing
+  - Does the task filter/remove project and list logic actually work and do tasks return to the primary task container?
+  - Write out each primary user flow and observe what happens in logic and rendering. 
+
+- Additional notes
+  - I keep wanting a 'create project' and 'create list' button. Perhaps a combined '+' button at the top can serve this purpose. Right now there is no way to create a list or project outside of task creation. Alternatively, there is no way to add a task inside a project or list. Both things should be present before shipping.
 
 
 ### 11/09/2026

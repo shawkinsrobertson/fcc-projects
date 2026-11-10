@@ -36,6 +36,8 @@
         - reordering
         - listing by due date
         - showing/hiding completed tasks
+        - long press or swipe to delete (on small screens)
+        - option to select multiple tasks/batch delete
 
 
 

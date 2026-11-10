@@ -61,12 +61,19 @@
         </div>
       </form>
       <form class="project-form hidden" id="project-form">
-        <label class="form-label" for="project-title-input">Name</label>
-            <input required type="text" class="form-control" id="project-title-input" value="" />
-          <label class="form-label" for="project-date-input">Date</label>
-            <input type="date" class="form-control" id="project-date-input" value="" />
-          <label class="form-label" for="project-description-input">Description</label>
-            <textarea class="form-control" id="project-description-input" cols="30" rows="5"></textarea>
+        <div class="project-form-header">
+          <button id="close-project-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+            <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
+          </button>
+        </div>
+        <div class ='project-form-body'>
+          <label class="form-label" for="project-title-input">Name</label>
+              <input required type="text" class="form-control" id="project-title-input" value="" />
+            <label class="form-label" for="project-date-input">Date</label>
+              <input type="date" class="form-control" id="project-date-input" value="" />
+            <label class="form-label" for="project-description-input">Description</label>
+              <textarea class="form-control" id="project-description-input" cols="30" rows="5"></textarea>
+          </div>
             <div class="form-footer">
           <button id="add-or-update-project-btn" class="btn large-btn" type="submit">
             Create Project
@@ -74,12 +81,19 @@
         </div>
       </form>
       <form class="list-form hidden" id="list-form">
-        <label class="form-label" for="list-title-input">Name</label>
-            <input required type="text" class="form-control" id="list-title-input" value="" />
-          <label class="form-label" for="list-date-input">Date</label>
-            <input type="date" class="form-control" id="list-date-input" value="" />
-          <label class="form-label" for="list-description-input">Description</label>
-            <textarea class="form-control" id="list-description-input" cols="30" rows="5"></textarea>
+        <div class="list-form-header">
+          <button id="close-list-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+            <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
+          </button>
+        </div>
+        <div class="list-form-body">
+          <label class="form-label" for="list-title-input">Name</label>
+              <input required type="text" class="form-control" id="list-title-input" value="" />
+            <label class="form-label" for="list-date-input">Date</label>
+              <input type="date" class="form-control" id="list-date-input" value="" />
+            <label class="form-label" for="list-description-input">Description</label>
+              <textarea class="form-control" id="list-description-input" cols="30" rows="5"></textarea>
+        </div>
             <div class="form-footer">
           <button id="add-or-update-list-btn" class="btn large-btn" type="submit">
             Create List
@@ -101,16 +115,16 @@
       </dialog>
       <div id="project-dashboard">
         <h3 class="dashboard-title"></h3>
-        <input type="textarea" name="project-description" />
+        <p class="dashboard-description"></p>
         <div class="form-btn-div">
-          <button id="edit-project-btn" class="btn" onclick =editProject(this)>edit project</button>
+          <button id="edit-project-btn" class="btn">edit project</button>
           <button id="delete-project-btn" class="btn">delete project</button>
         </div>
         <div class="filtered-task-list"></div>
       </div>
       <div id="list-dashboard">
          <h3 class="dashboard-title"></h3>
-        <input type="textarea" name="list-description" />
+          <p class="dashboard-description"></p>
         <div class="form-btn-div">
           <button id="edit-list-btn" class="btn">edit list</button>
           <button id="delete-list-btn" class="btn">delete list</button>   

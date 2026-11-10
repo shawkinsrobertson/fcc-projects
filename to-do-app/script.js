@@ -1,6 +1,6 @@
 
 
-// form and containers
+// form and containers ---------------------------------------------------------------------
 const taskForm = document.getElementById('task-form');
 const projectForm = document.getElementById('project-form');
 const listForm = document.getElementById('list-form');
@@ -13,21 +13,31 @@ const projectDashboard = document.getElementById('project-dashboard');
 const listDashboard = document.getElementById('list-dashboard');
 const projectTaskList = projectDashboard.querySelector('.filtered-task-list');
 const listTaskList = listDashboard.querySelector('.filtered-task-list');
+const projectDashboardDescription = projectDashboard.querySelector('.dashboard-description');
+const projectDashboardTitle = projectDashboard.querySelector('.dashboard-title');
+const listDashboardDescription = listDashboard.querySelector('.dashboard-description');
+const listDashboardTitle = listDashboard.querySelector('.dashboard-title');
 
 
-//buttons
+//buttons ---------------------------------------------------------------------
 const openTaskFormBtn = document.getElementById('open-task-form-btn');
 const closeTaskFormBtn = document.getElementById('close-task-form-btn');
 const addOrUpdateTaskBtn = document.getElementById('add-or-update-task-btn');
 const addOrUpdateProjectBtn = document.getElementById('add-or-update-project-btn');
 const addOrUpdateListBtn = document.getElementById('add-or-update-list-btn');
 const cancelBtn = document.getElementById('cancel-btn');
-const deleteProjectsBtn = document.getElementById('delete-projects-btn');
-const deleteListsBtn = document.getElementById('delete-lists-btn');
-const editProjectBtn = document.getElementById('edit-project-btn');
+const closeProjectFormBtn = document.getElementById('close-project-form-btn');
+const closeListFormBtn = document.getElementById('close-list-form-btn');
 const editListBtn = document.getElementById('edit-list-btn');
+const deleteListBtn = document.getElementById('delete-list-btn');
+const editProjectBtn = document.getElementById('edit-project-btn');
+const deleteProjectBtn = document.getElementById('delete-project-btn');
 
-//inputs and dialog
+
+const deleteListsBtn = document.getElementById('delete-lists-btn');
+const deleteProjectsBtn = document.getElementById('delete-projects-btn');
+
+//inputs and dialog ---------------------------------------------------------------------
 const confirmCloseDialog = document.getElementById('confirm-close-dialog');
 const discardBtn = document.getElementById('discard-btn');
 const titleInput = document.getElementById('task-title-input');
@@ -45,13 +55,13 @@ const listFormTitle = document.getElementById('list-title-input');
 const listFormDate = document.getElementById('list-date-input');
 const listFormDescription = document.getElementById('list-description-input');
 
-//data and storage
+//data and storage ---------------------------------------------------------------------
 const taskData = JSON.parse(localStorage.getItem('tasks')) || [];
 const projectData = JSON.parse(localStorage.getItem('projects')) || [];
 const listData = JSON.parse(localStorage.getItem('lists')) || [];
 let currentTask = {};
 let currentProject = {};
-let currentlist = {};
+let currentList = {};
 
 //functions
 // const removeSpecialChars = (str) => {
@@ -59,62 +69,38 @@ let currentlist = {};
 //     return cleanStr;
 // }
 
-const reset = () => {
-    addOrUpdateTaskBtn.innerText = 'Add Task';
-    titleInput.value = '';
-    dateInput.value = '';
-    projectInput.value = '';
-    listInput.value = '';
-    descriptionInput.value   = '';
-    currentTask = {}; 
-
-};
-
-const createProject = () => {
-    const projectObj = {
-        id: `project-${crypto.randomUUID()}`,
-        date: dateInput.value,
-        title: projectInput.value.trim(),
-        description: '',
-    }
-    projectData.unshift(projectObj);
-    localStorage.setItem('projects', JSON.stringify(projectData));
-};
-
-const deleteProject = () => {
-    const projectIndex = projectData.findIndex(project => project.id === currentProject.id);
-    if(projectIndex === -1) {
-        alert(`This project doesn't exist. Are you looking for a different project?`);
-        return;
-    } else {
-        projectData.splice(projectIndex, 1);
+//GENERAL HELPERS ---------------------------------------------------------------------
+const reset = (type) => {
+    if(type === 'task'){
+        addOrUpdateTaskBtn.innerText = 'Add Task';
+        titleInput.value = '';
+        dateInput.value = '';
+        projectInput.value = '';
+        listInput.value = '';
+        descriptionInput.value   = '';
+        currentTask = {}; 
     };
-    localStorage.setItem('projects', JSON.stringify(projectData));
-};
 
-const createList = () => {
-    const listObj = {
-        id: `list-${crypto.randomUUID()}`,
-        date: dateInput.value,
-        title: listInput.value.trim(),
-        description: '',
-    }
-    listData.unshift(listObj);
-    localStorage.setItem('lists', JSON.stringify(listData));
-};
-
-const deleteList = () => {
-    const listIndex = listData.findIndex(list => list.id === currentList.id);
-    if(listIndex === -1) {
-        alert(`This list doesn't exist. Are you looking for a different list?`);
-        return;
-    } else {
-        listData.splice(listIndex, 1);
+    if(type === 'project') {
+        addOrUpdateProjectBtn.innerText = 'Create Project';
+        projectFormTitle.value = '';
+        projectFormDate.value = '';
+        projectFormDate.value = '';
+        currentProject = {}; 
     };
-    localStorage.setItem('lists', JSON.stringify(listData));
+
+    if(type === 'list') {
+        addOrUpdateListBtn.innerText = 'Create List';
+        listFormTitle.value = '';
+        listFormDate.value = '';
+        listFormDescription.value   = '';
+        currentList = {};
+    };
+
 };
 
 
+//TASKS ---------------------------------------------------------------------
 const addOrUpdateTask = () => {
     if(!titleInput.value.trim()){
         alert('Please provide a title. Tasks without names cannot be accomplished.');
@@ -154,11 +140,8 @@ const addOrUpdateTask = () => {
     updateTaskContainer();
     updateProjectContainer();
     updateListContainer();
-    reset();
+    reset('task');
 };
-
-addOrUpdateProject = () => {};
-addOrUpdateList = () => {};
 
 const deleteTask = (buttonEl) => {
     const taskCard = buttonEl.closest('.task');
@@ -172,6 +155,7 @@ const deleteTask = (buttonEl) => {
     taskData.splice(dataArrIndex, 1);
     localStorage.setItem('tasks', JSON.stringify(taskData));
 };
+
 const editTask = (buttonEl) => {
     const taskCard = buttonEl.closest('.task');
     taskForm.classList.toggle('hidden');
@@ -186,19 +170,6 @@ const editTask = (buttonEl) => {
     addOrUpdateTaskBtn.innerText = 'Update Task';
 
 };
-
-const editProject = (buttonEl) => {
-    const projectCard = buttonEl.closest('[data-project]');
-    const lookupTitle = projectCard.querySelector('.dashboard-title').innerHTML;
-    projectForm.classList.toggle('hidden');
-    const dataArrIndex = projectData.findIndex(project => project.title === lookupTitle);
-    currentProject = projectData[dataArrIndex];
-    projectFormTitle.value = currentProject.title;
-    projectFormDate.value = currentProject.date;
-    projectFormDescription.value = currentProject.description;
-    addOrUpdateProjectBtn.innerText = 'Update Project';
-
-}
 
 const updateTaskContainer = () => {
     tasksContainer.innerHTML = '';
@@ -219,6 +190,76 @@ const updateTaskContainer = () => {
     `})
 };
 
+//PROJECTS ---------------------------------------------------------------------
+const addOrUpdateProject = () => {
+    if(!projectFormTitle.value.trim() && !projectTitle){
+        alert('Please give your project a name; otherwise, it cannot materialize.');
+        return;
+    };
+    const dataArrIndex = projectData.findIndex(project => project.id === currentProject.id);
+    const projectObj = {
+        id: currentProject.id || `project-${crypto.randomUUID()}`,
+        date: projectFormDate.value || dateInput.value,
+        title: projectFormTitle.value.trim() || projectInput.value.trim(),
+        description: projectFormDescription.value || null,
+    };
+    if(dataArrIndex === -1) {
+        projectData.unshift(projectObj);
+    } else {
+        projectData[dataArrIndex] = projectObj;
+    };
+
+    localStorage.setItem('projects', JSON.stringify(projectData));
+    updateProjectContainer();
+    updateDashboard('project');
+    projectForm.classList.toggle('hidden');
+};
+
+const createProject = () => { 
+    const projectObj = {
+        id: `project-${crypto.randomUUID()}`,
+        date: dateInput.value,
+        title: projectInput.value.trim(),
+        description: '',
+    }
+    projectData.unshift(projectObj);
+    localStorage.setItem('projects', JSON.stringify(projectData));
+};
+
+const editProject = (buttonEl) => {
+    const projectCard = buttonEl.closest('[data-project]');
+    const lookupTitle = projectCard.querySelector('.dashboard-title').innerHTML;
+    projectForm.classList.toggle('hidden');
+    const dataArrIndex = projectData.findIndex(project => project.title === lookupTitle);
+    currentProject = projectData[dataArrIndex];
+    projectFormTitle.value = currentProject.title;
+    projectFormDate.value = currentProject.date;
+    projectFormDescription.value = currentProject.description;
+    addOrUpdateProjectBtn.innerText = 'Update Project';
+
+};
+
+const deleteProject = () => {
+    const projectIndex = projectData.findIndex(project => project.title === currentProject.id);
+    const projectToClear = projectData[projectIndex];
+    if(projectIndex === -1) {
+        alert(`This project doesn't exist. Are you looking for a different project?`);
+        return;
+    } else {
+        projectData.splice(projectIndex, 1);
+        taskData.forEach((task) => {
+            if(task.project === projectToClear.title) {
+                task.project = null;
+            };
+        });
+    };
+    localStorage.setItem('projects', JSON.stringify(projectData));
+    localStorage.setItem('tasks', JSON.stringify(taskData));
+    updateProjectContainer();
+    updateTaskContainer();
+    clearDashboard('project');
+};
+
 const updateProjectContainer = () => {
      projectContainer.innerHTML = '';
     projectData.forEach(({title}) => projectContainer.innerHTML += `
@@ -227,6 +268,76 @@ const updateProjectContainer = () => {
         </div>
     `)
 };
+
+//LISTS ---------------------------------------------------------------------
+const addOrUpdateList = () => {
+    if(!listFormTitle.value.trim() && !listTitle){
+        alert('Please give your list a name; otherwise, it cannot materialize.');
+        return;
+    };
+    const dataArrIndex = listData.findIndex(list => list.id === currentList.id);
+    const listObj = {
+        id: currentList.id || `list-${crypto.randomUUID()}`,
+        date: listFormDate.value || dateInput.value,
+        title: listFormTitle.value || listInput.value.trim(),
+        description: listFormDescription.value || null,
+    };
+
+    if(dataArrIndex === -1) {
+        listData.unshift(listObj);
+
+    } else {
+        listData[dataArrIndex] = listObj;
+    }
+    localStorage.setItem('lists', JSON.stringify(listData));
+    updateListContainer();
+    updateDashboard('list');
+    listForm.classList.toggle('hidden');
+};
+
+const createList = () => {
+    const listObj = {
+        id: `list-${crypto.randomUUID()}`,
+        date: dateInput.value,
+        title: listInput.value.trim(),
+        description: '',
+    }
+    listData.unshift(listObj);
+    localStorage.setItem('lists', JSON.stringify(listData));
+};
+
+const editList = (buttonEl) => {
+    const listCard = buttonEl.closest('[data-list]');
+    const lookupTitle = listCard.querySelector('.dashboard-title').innerHTML;
+    listForm.classList.toggle('hidden');
+    const dataArrIndex = listData.findIndex(list => list.title === lookupTitle);
+    currentList = listData[dataArrIndex];
+    listFormTitle.value = currentList.title;
+    listFormDate.value = currentList.date;
+    listFormDescription.value = currentList.description;
+    addOrUpdateListBtn.innerText = 'Update List';
+}
+
+const deleteList = () => {
+    const listIndex = listData.findIndex(list => list.title === currentList.id);
+    const listToClear = listData[listIndex];
+    if(listIndex === -1) {
+        alert(`This list doesn't exist. Are you looking for a different list?`);
+        return;
+    } else {
+        listData.splice(listIndex, 1);
+        taskData.forEach((task) => {
+            if(task.list === listToClear.title){
+                task.list = null;
+            }});
+    };
+    localStorage.setItem('lists', JSON.stringify(listData));
+    localStorage.setItem('tasks', JSON.stringify(taskData));
+    updateListContainer();
+    updateTaskContainer();
+    clearDashboard('list');
+};
+
 const updateListContainer = () => {
      listContainer.innerHTML = '';
     listData.forEach(({id, title}) => listContainer.innerHTML += `
@@ -236,15 +347,31 @@ const updateListContainer = () => {
     `)
 };
 
+
+//UI RENDERING, ALL TYPES ---------------------------------------------------------------------
+const updateDashboard = (type) => {
+    if(type === 'project') {
+        projectDashboardTitle.innerHTML = projectFormTitle.value;
+        projectDashboardDescription.innerHTML = projectFormDescription.value;
+
+    };
+    if(type === 'list') {
+        listDashboardTitle.innerHTML = listFormTitle.value;
+        listDashboardDescription.innerHTML = listFormDescription.value;
+    };
+};
+
 const renderProject = (e) => {
     tasksContainer.innerHTML = '';
     projectTaskList.innerHTML = '';
     listDashboard.style.display = 'none';
     const projectElement = e.target.closest('.project'); 
+    const projectToRender = projectData.find(project => project.title === projectElement.id);
     const tasksToRender = taskData.filter(tasks => tasks.project === projectElement.id);
     projectDashboard.style.display = 'flex';
     projectDashboard.dataset.project = 'project';
-    projectTitle.innerHTML = projectElement.id;
+    projectTitle.innerHTML = projectToRender.title;
+    projectDashboardDescription.innerHTML = projectToRender.description ? projectToRender.description : '';
    tasksToRender.forEach(({id, title, date, project, list, description}) => {
         const formattedDate = date.split('-').reverse().join('-').replaceAll('-', '/');
         projectTaskList.innerHTML += `<div class='task' id='${id}'>
@@ -259,15 +386,19 @@ const renderProject = (e) => {
             </div>
         </div>`
     })  
+    
 };
 
 const renderList = (e) => {
    tasksContainer.innerHTML = '';
    listTaskList.innerHTML = '';
    projectDashboard.style.display = 'none';
+   listDashboard.style.display = 'flex';
     const listElement = e.target.closest('.list');
-    listDashboard.style.display = 'flex';
-    listTitle.innerHTML = listElement.id;
+    const listToRender = listData.find(list => list.title === listElement.id);
+    listTitle.innerHTML = listToRender.title;
+    listDashboard.dataset.list = 'list';
+    listDashboardDescription.innerHTML = listToRender.description ? listToRender.description : '';
     const tasksToRender = taskData.filter(tasks => tasks.list === listElement.id);
    tasksToRender.forEach(({id, title, date, project, list, description}) => {
         const formattedDate = date.split('-').reverse().join('-').replaceAll('-', '/');
@@ -286,6 +417,20 @@ const renderList = (e) => {
 
 };
 
+const clearDashboard = (type) => {
+    if(type === 'project') {
+        projectDashboardTitle.innerHTML = '';
+        projectDashboardDescription.innerHTML = '';
+        projectDashboard.classList.toggle('hidden');
+
+    };
+    if(type === 'list') {
+        listDashboardTitle.innerHTML = '';
+        listDashboardDescription.innerHTML = '';
+        listDashboard.classList.toggle('hidden');
+    };
+}
+
 if(taskData.length) {
     updateTaskContainer();
 }
@@ -296,21 +441,45 @@ if(listData.length) {
     updateListContainer();
 }
 
-//event listeners
+
+//EVENT LISTENERS ---------------------------------------------------------------------
 openTaskFormBtn.addEventListener('click', () => {taskForm.classList.toggle('hidden')});
+
 closeTaskFormBtn.addEventListener('click', () => {
     const formInputValuesUpdated = titleInput.value !== currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description;
     if(titleInput.value || dateInput.value || descriptionInput.value && formInputValuesUpdated) {
         confirmCloseDialog.showModal();
     } else {
         taskForm.classList.toggle('hidden')
-        reset();
+        reset('task');
     }
 });
+
+closeProjectFormBtn.addEventListener('click', () => {
+    const formInputValuesUpdated = projectFormTitle.value !== currentProject.title || projectFormDate.value !== currentProject.date || projectFormDescription.value !== currentProject.description;
+    if(projectFormTitle.value || projectFormDate.value || projectFormDescription.value && formInputValuesUpdated) {
+        confirmCloseDialog.showModal();
+    } else {
+        //projectForm.classList.toggle('hidden')
+        reset('project');
+    }
+});
+
+closeListFormBtn.addEventListener('click', () => {
+    const formInputValuesUpdated = listFormTitle.value !== currentList.title || listFormDate.value !== currentList.date || listFormDescription.value !== currentList.description;
+    if(listFormTitle.value || listFormDate.value || listFormDescription.value && formInputValuesUpdated) {
+        confirmCloseDialog.showModal();
+    } else {
+        listForm.classList.toggle('hidden')
+        reset('list');
+    }
+});
+
 cancelBtn.addEventListener('click', () => {confirmCloseDialog.close()});
+
 discardBtn.addEventListener('click', () => {
     confirmCloseDialog.close()
-    reset();
+    reset(); // this does not reset all forms
 });
 
 taskForm.addEventListener('submit', (e) => {
@@ -327,6 +496,11 @@ listForm.addEventListener('submit', (e) => {
     e.preventDefault();
     addOrUpdateList();
 });
+
+editProjectBtn.addEventListener('click', (e) => editProject(e.currentTarget));
+deleteProjectBtn.addEventListener('click', deleteProject);
+editListBtn.addEventListener('click', (e) => editList(e.currentTarget));
+deleteListBtn.addEventListener('click', deleteList);
 
 //temp event listeners for testing purposes. delete later!
 deleteProjectsBtn.addEventListener('click', () => {
@@ -355,5 +529,3 @@ listContainer.addEventListener('click', (e) => {
 
 //expand/collapse sidebar on click, change logo/hamburger menu/close icon display
 // sidebar.addEventListener('click',)
-
-// listen for key input on project and list inputs, search current projects/lists, create new if no matching entries
