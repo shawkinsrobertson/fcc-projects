@@ -10,6 +10,27 @@
 
 ----------------------------------------------------------------------------------------------
 
+### 11/11/2026
+- Created
+  - toggling for `.menu-sidebar` with responsive header
+  - Added checkboxes to task cards to mark them complete
+  - Logic for changing appearance of task cards once marked complete (saved state in new key `completed` with boolean from checked status on input, used saved state for re-rendering)
+  - Started collapsable multi-purpose add button with expanding button menu for different creation types (task, project, list)
+  - Refactored task creation into helper function for multiple task rendering endpoints
+  - Light styling adjustments to task cards, app header, fonts
+
+- Troubleshooting
+  - storing completed status on tasks and re-rendering after DOM reload
+  - some CSS selectors working against each other causing very narrow task container in the UI
+
+
+- STILL TO DO
+  - `reset()` on the `discardBtn` does not reset by type. Causing UI issues.
+  - After editing a task inside a project the task-container is visible under the filtered task list.
+  - ~~'create project' and 'create list' buttons.~~
+  - Create ability to add a task inside a project or list
+  - ~~Refactor repeating rendering for tasks~~
+
 ### 11/10/2026
 - Created
   - `editList()`, `deleteList()`, `updateDashboard(type)`, and updated `reset()` function to take type 'project' or 'list'. 
@@ -26,7 +47,7 @@
   - After editing a task inside a project the task-container is visible under the filtered task list.
 
 - Needs testing
-  - Does the task filter/remove project and list logic actually work and do tasks return to the primary task container?
+  - ~~Does the task filter/remove project and list logic actually work and do tasks return to the primary task container?~~
   - Write out each primary user flow and observe what happens in logic and rendering. 
 
 - Additional notes
@@ -47,10 +68,10 @@
   - Fussed a very long time with getting task and project card buttons to behave as desired after putting them in their own div. Used `.closest()` to target nearest project div and added a `data-project` attribute on the project dashboard to link elements and actions.
 
 - Didn't get to
-  - Can edit a project but it doesn't update the project entry
-  - project description does not render when project dashboard renders (currently a textarea entry - need to update to paragraph line)
-  - Need to repeat logic sequence and wiring for lists
-  - Need task updates when their projects and lists are deleted (return to null and rendered in general task list)
+ ~~ - Can edit a project but it doesn't update the project entry~~
+  - ~~project description does not render when project dashboard renders (currently a textarea entry - need to update to paragraph line)~~
+  -~~ Need to repeat logic sequence and wiring for lists~~
+  - ~~Need task updates when their projects and lists are deleted (return to null and rendered in general task list)~~
 
 
 ### 11/06/2026

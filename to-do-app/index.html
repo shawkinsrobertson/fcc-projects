@@ -12,7 +12,11 @@
 <body>
   <main>
     <div class="menu-sidebar">
-      <div class="logo"></div>
+      <div id="sidebar-header">
+        <div id="logo"></div>
+        <h2 id="wordmark">Do Shit</h2>
+        <button id="sidebar-close-btn" aria-label="close" type="button">X</button>
+      </div>
       <div class="projects">
         <h3>Projects</h3>
         <button id="delete-projects-btn" class="btn">delete projects</button>
@@ -28,12 +32,15 @@
       </div>
     </div>
     <div class="todo-app">
-      <div class="title-and-primarybtn">
+      <header class="title-and-primarybtn">
         <h1>Do Shit</h1>
-      <button id="open-task-form-btn" class="btn large-btn">
-        Add New Task
-      </button>
-      </div>
+        <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">&#43;</button>
+        <div id="button-dropdown">
+          <button id="open-task-form-btn" type="btn">New Task</button>
+          <button id="open-project-form-btn" type="btn">New Project</button>
+          <button id="open-list-form-btn" type="btn">New List</button>
+        </div>
+    </header>
       <form class="task-form hidden" id="task-form">
         <div class="task-form-header">
           <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">
@@ -114,20 +121,24 @@
         </form>
       </dialog>
       <div id="project-dashboard">
-        <h3 class="dashboard-title"></h3>
-        <p class="dashboard-description"></p>
         <div class="form-btn-div">
           <button id="edit-project-btn" class="btn">edit project</button>
           <button id="delete-project-btn" class="btn">delete project</button>
         </div>
+        <div class="dashboard-header">
+          <h3 class="dashboard-title"></h3>
+          <p class="dashboard-description"></p>
+        </div>
         <div class="filtered-task-list"></div>
       </div>
       <div id="list-dashboard">
-         <h3 class="dashboard-title"></h3>
-          <p class="dashboard-description"></p>
         <div class="form-btn-div">
           <button id="edit-list-btn" class="btn">edit list</button>
           <button id="delete-list-btn" class="btn">delete list</button>   
+        </div>
+        <div class="dashboard-header">
+          <h3 class="dashboard-title"></h3>
+          <p class="dashboard-description"></p>
         </div>
         <div class="filtered-task-list"></div>
       </div>
