@@ -18,6 +18,11 @@ const listDashboardDescription = listDashboard.querySelector('.dashboard-descrip
 const listDashboardTitle = listDashboard.querySelector('.dashboard-title');
 const todoApp = document.querySelector('.todo-app');
 const createBtnDropdown = document.getElementById('button-dropdown');
+const dashboardHeader = document.querySelectorAll('.dashboard-header');
+const dashboard = document.querySelectorAll('.dashboard');
+const taskFormHome = document.getElementById('task-form-home');
+const forms = document.querySelectorAll('.form');
+
 
 //buttons ---------------------------------------------------------------------
 const addNewBtn = document.getElementById('add-new-btn');
@@ -36,6 +41,7 @@ const deleteListBtn = document.getElementById('delete-list-btn');
 const editProjectBtn = document.getElementById('edit-project-btn');
 const deleteProjectBtn = document.getElementById('delete-project-btn');
 const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+const addTaskInlineBtn = document.querySelectorAll('.add-task-inline-btn');
 
 const deleteListsBtn = document.getElementById('delete-lists-btn');
 const deleteProjectsBtn = document.getElementById('delete-projects-btn');
@@ -88,7 +94,7 @@ const reset = (type) => {
         addOrUpdateProjectBtn.innerText = 'Create Project';
         projectFormTitle.value = '';
         projectFormDate.value = '';
-        projectFormDate.value = '';
+        projectFormDescription.value = '';
         currentProject = {}; 
     };
 
@@ -100,11 +106,18 @@ const reset = (type) => {
         currentList = {};
     };
 
+    if(type === 'button') {
+        addNewBtn.classList.toggle('selected');
+        createBtnDropdown.classList.toggle('open');
+    };
+
 };
 
 
 //TASKS ---------------------------------------------------------------------
 const addOrUpdateTask = () => {
+    const visibleDashboard = [projectDashboard, listDashboard]
+        .find(dashboard => getComputedStyle(dashboard).display !== 'none');
     if(!titleInput.value.trim()){
         alert('Please provide a title. Tasks without names cannot be accomplished.');
         return;
@@ -141,7 +154,12 @@ const addOrUpdateTask = () => {
     }
 
     localStorage.setItem('tasks', JSON.stringify(taskData));
-    updateTaskContainer();
+    if(visibleDashboard) {
+        const tasksToRender = taskData.filter(tasks => tasks.project === projectTitle);
+        projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+    }else {
+        updateTaskContainer();
+    };
     updateProjectContainer();
     updateListContainer();
     reset('task');
@@ -304,6 +322,7 @@ const editProject = (buttonEl) => {
 const deleteProject = (buttonEl) => {
     const projectCard = buttonEl.closest('[data-project]');
     const lookupTitle = projectCard.querySelector('.dashboard-title').innerHTML;
+    console.log(lookupTitle)
     const dataArrIndex = projectData.findIndex(project => project.title === lookupTitle);
     const projectToClear = projectData[dataArrIndex];
     if(dataArrIndex === -1) {
@@ -357,6 +376,8 @@ const addOrUpdateList = () => {
     updateListContainer();
     updateDashboard('list');
     listForm.classList.toggle('hidden');
+    listDashboard.style.display = 'flex';
+    tasksContainer.innerHTML = '';
 };
 
 const createList = () => {
@@ -383,8 +404,9 @@ const editList = (buttonEl) => {
 }
 
 const deleteList = (buttonEl) => {
-    const listCard = buttonEl.closest('[data-list');
+    const listCard = buttonEl.closest('[data-list]');
     const lookupTitle = listCard.querySelector('.dashboard-title').innerHTML;
+    console.log(lookupTitle)
     const dataArrIndex = listData.findIndex(list => list.title === lookupTitle);
     const listToClear = listData[dataArrIndex];
     if(dataArrIndex === -1) {
@@ -470,6 +492,28 @@ const clearDashboard = (type) => {
     };
 }
 
+const setForm = () => {
+    const visibleDashboard = [projectDashboard, listDashboard]
+        .find(dashboard => getComputedStyle(dashboard).display !== 'none') || false;
+    
+
+    if(!visibleDashboard) {
+        taskFormHome.after(taskForm);
+    } else {
+        const targetList = visibleDashboard.querySelector('.filtered-task-list');
+        targetList.before(taskForm);
+    }
+    taskForm.classList.toggle('hidden');
+}
+
+const toggleFormViz = (formEl) => {
+   forms.forEach(form => {form.classList.add('hidden')});
+
+   if(formEl) {
+    formEl.classList.toggle('hidden');
+   }
+}
+
 if(taskData.length) {
     updateTaskContainer();
 }
@@ -484,14 +528,15 @@ if(listData.length) {
 //EVENT LISTENERS ---------------------------------------------------------------------
 addNewBtn.addEventListener('click', () => {
     addNewBtn.ariaExpanded = addNewBtn.ariaExpanded !== 'true' ? 'true' : 'false';
-    addNewBtn.classList.toggle('selected');
-    createBtnDropdown.classList.toggle('open'); // these actions can be placed in a helper since they will need to trigger for the other form buttons once clicked
+    reset('button'); // these actions can be placed in a helper since they will need to trigger for the other form buttons once clicked
 });
-openTaskFormBtn.addEventListener('click', () => {
-    taskForm.classList.toggle('hidden');
+openTaskFormBtn.addEventListener('click', (e) => {
+    setForm();
+    reset('button');
+    toggleFormViz(taskForm);
 });
-openProjectFormBtn.addEventListener('click', () => {projectForm.classList.toggle('hidden')});
-openListFormBtn.addEventListener('click', () => {listForm.classList.toggle('hidden')});
+openProjectFormBtn.addEventListener('click', () => {toggleFormViz(projectForm)});
+openListFormBtn.addEventListener('click', () => {toggleFormViz(listForm)});
 
 closeTaskFormBtn.addEventListener('click', () => {
     const formInputValuesUpdated = titleInput.value !== currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description;
@@ -508,7 +553,7 @@ closeProjectFormBtn.addEventListener('click', () => {
     if(projectFormTitle.value || projectFormDate.value || projectFormDescription.value && formInputValuesUpdated) {
         confirmCloseDialog.showModal();
     } else {
-        //projectForm.classList.toggle('hidden')
+        projectForm.classList.toggle('hidden')
         reset('project');
     }
 });
@@ -532,7 +577,7 @@ discardBtn.addEventListener('click', () => {
 
 taskForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    addOrUpdateTask();
+    addOrUpdateTask(e);
 });
 
 projectForm.addEventListener('submit', (e) => {
@@ -581,6 +626,9 @@ todoApp.addEventListener('change', (event) => {
     localStorage.setItem('tasks', JSON.stringify(taskData));
 });
 
+addTaskInlineBtn.forEach(button => button.addEventListener('click', () => {
+    setForm();
+}))
 
 
 //temp event listeners for testing purposes. delete later!

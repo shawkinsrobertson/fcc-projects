@@ -75,10 +75,11 @@ h1 {
 }
 
 
-#add-new-btn { /* replace the '+' html with proper icon for easier centering */
-  font-size: 2.5rem;
+#add-new-btn { 
+  font-size: 1.5rem;
   min-width: 48px;
   min-height: 48px;
+  padding: 8px 12px;
   background-color: var(--accent);
   color: var(--bg);
   border-radius: 12px;
@@ -170,6 +171,7 @@ h1 {
   justify-content: flex-start;
   gap: 12px;
   padding-left: 12px;
+  padding-bottom: 16px;
   border-bottom: 0.5px solid lightgray;
 }
 
@@ -193,7 +195,7 @@ h1 {
 
 #tasks-container {
   width: min(100%, 40rem);
-  margin: 24px auto;
+  margin: 0 auto;
   min-width: 0;
   overflow-y: auto;
 }
@@ -237,7 +239,7 @@ h1 {
 }
 
 /* Task, project, and list forms */
-.task-form, .project-form, .list-form {
+.form {
   display: flex;
   background-color: var(--bg);
   border: 0.5px solid rgba(2, 45, 64, 0.3);
@@ -251,6 +253,11 @@ h1 {
 .task-form-header, .project-form-header, .list-form-header {
   display: flex;
   justify-content: flex-end;
+}
+
+.title-and-add {
+  display: flex;
+  gap: 12px;
 }
 
 .task-form-body {

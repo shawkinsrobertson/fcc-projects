@@ -35,7 +35,7 @@
       <header class="title-and-primarybtn">
         <h1>Do Shit</h1>
         <div class="menu-wrapper">
-          <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">&#43;</button>
+          <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">Create</button>
           <div id="button-dropdown" class="menu-panel">
             <button id="open-task-form-btn" type="btn">New Task</button>
             <button id="open-project-form-btn" type="btn">New Project</button>
@@ -43,33 +43,35 @@
           </div>
         </div>
     </header>
-      <form class="task-form hidden" id="task-form">
-        <div class="task-form-header">
-          <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">
-            <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
-          </button>
-        </div>
-        <div class="task-form-body">
-            <label class="form-label" for="task-title-input">Name</label>
-            <input required type="text" class="form-control" id="task-title-input" value="" />
-            <label class="form-label" for="task-date-input">Date</label>
-            <input type="date" class="form-control" id="task-date-input" value="" />
-            <label class="form-label" for="task-project-input">Project</label>
-            <input type="text" class="form-control" id="task-project-input" value="" />
-            <label class="form-label" for="task-list-input">List</label>
-            <input type="text" class="form-control" id="task-list-input" value="" />
-            <label class="form-label" for="task-parent-input">Parent task?</label>
-            <input type="text" class="form-control" id="task-parent-input" value="" />
-             <label class="form-label" for="task-description-input">Description</label>
-            <textarea class="form-control" id="task-description-input" cols="30" rows="5"></textarea>
-        </div>
-        <div class="task-form-footer">
-          <button id="add-or-update-task-btn" class="btn large-btn" type="submit">
-            Add Task
-          </button>
-        </div>
-      </form>
-      <form class="project-form hidden" id="project-form">
+      <div id="task-form-home">
+        <form class="form hidden" id="task-form">
+          <div class="task-form-header">
+            <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+              <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
+            </button>
+          </div>
+          <div class="task-form-body">
+              <label class="form-label" for="task-title-input">Name</label>
+              <input required type="text" class="form-control" id="task-title-input" value="" />
+              <label class="form-label" for="task-date-input">Date</label>
+              <input type="date" class="form-control" id="task-date-input" value="" />
+              <label class="form-label" for="task-project-input">Project</label>
+              <input type="text" class="form-control" id="task-project-input" value="" />
+              <label class="form-label" for="task-list-input">List</label>
+              <input type="text" class="form-control" id="task-list-input" value="" />
+              <label class="form-label" for="task-parent-input">Parent task?</label>
+              <input type="text" class="form-control" id="task-parent-input" value="" />
+              <label class="form-label" for="task-description-input">Description</label>
+              <textarea class="form-control" id="task-description-input" cols="30" rows="5"></textarea>
+          </div>
+          <div class="task-form-footer">
+            <button id="add-or-update-task-btn" class="btn large-btn" type="submit">
+              Add Task
+            </button>
+          </div>
+        </form>
+      </div>
+      <form class="form hidden" id="project-form">
         <div class="project-form-header">
           <button id="close-project-form-btn" class="close-task-form-btn" type="button" aria-label="close">
             <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
@@ -89,7 +91,7 @@
           </button>
         </div>
       </form>
-      <form class="list-form hidden" id="list-form">
+      <form class="form hidden" id="list-form">
         <div class="list-form-header">
           <button id="close-list-form-btn" class="close-task-form-btn" type="button" aria-label="close">
             <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
@@ -122,24 +124,30 @@
           </div>
         </form>
       </dialog>
-      <div id="project-dashboard">
+      <div id="project-dashboard" class="dashboard">
         <div class="form-btn-div">
           <button id="edit-project-btn" class="btn">edit project</button>
           <button id="delete-project-btn" class="btn">delete project</button>
         </div>
         <div class="dashboard-header">
-          <h3 class="dashboard-title"></h3>
+          <div class="title-and-add">
+            <h3 class="dashboard-title"></h3>
+            <button class="add-task-inline-btn btn">+ add task</button>
+          </div>
           <p class="dashboard-description"></p>
         </div>
         <div class="filtered-task-list"></div>
       </div>
-      <div id="list-dashboard">
+      <div id="list-dashboard" class="dashboard">
         <div class="form-btn-div">
           <button id="edit-list-btn" class="btn">edit list</button>
           <button id="delete-list-btn" class="btn">delete list</button>   
         </div>
         <div class="dashboard-header">
-          <h3 class="dashboard-title"></h3>
+          <div class="title-and-add">
+            <h3 class="dashboard-title"></h3>
+            <button class="add-task-inline-btn btn">+ add task</button>
+          </div>
           <p class="dashboard-description"></p>
         </div>
         <div class="filtered-task-list"></div>

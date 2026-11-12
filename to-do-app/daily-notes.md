@@ -12,6 +12,18 @@
 - [ ] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
+### 11/12/2026
+- Logic for moving the form location into/out of project and list dashboards based on dashboard visibility state
+- Fixed task container visibility when inside dashboard
+- Fixed some syntax errors breaking the `deleteProject()` and `deleteList()` functions (lists/projects were not being removed from tasks. Now they are!)
+- Fixed issue where all forms could be visible at once from create buttons in header (toggling visibility now)
+- Changed create project/list logic so that user is navigated straight to that dashboard after creating.
+
+- Lingering tasks:
+  - Logic for autofilling project/list inputs on task form when called inside a project or list
+  - Fix formatting for description paragrph inside task card (p:last-of-type changes based on whether or not a `descriptionInput.value` is present)
+
+
 
 ### 11/11/2026
 - Created
@@ -29,9 +41,9 @@
 
 - STILL TO DO
   - `reset()` on the `discardBtn` does not reset by type. Causing UI issues.
-  - After editing a task inside a project the task-container is visible under the filtered task list.
+  - ~~After editing a task inside a project the task-container is visible under the filtered task list.~~
   - ~~'create project' and 'create list' buttons.~~
-  - Create ability to add a task inside a project or list
+  - ~~Create ability to add a task inside a project or list~~
   - ~~Refactor repeating rendering for tasks~~
 
 ### 11/10/2026
@@ -54,7 +66,7 @@
   - Write out each primary user flow and observe what happens in logic and rendering. 
 
 - Additional notes
-  - I keep wanting a 'create project' and 'create list' button. Perhaps a combined '+' button at the top can serve this purpose. Right now there is no way to create a list or project outside of task creation. Alternatively, there is no way to add a task inside a project or list. Both things should be present before shipping.
+  - ~~I keep wanting a 'create project' and 'create list' button. Perhaps a combined '+' button at the top can serve this purpose. Right now there is no way to create a list or project outside of task creation. Alternatively, there is no way to add a task inside a project or list. Both things should be present before shipping.~~ completed 11/11/2026
 
 
 ### 11/09/2026
