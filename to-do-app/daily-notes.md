@@ -9,6 +9,7 @@
 - [ ] UI: architecture, affordances, validation, layout, animations, responsiveness
 - [ ] Sort, Filter, and Search functions
 - [ ] Task, Project, and List forms should mimic their rendered components (task card, project and list dashboards)
+- [ ] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
 
@@ -70,9 +71,9 @@
   - Fussed a very long time with getting task and project card buttons to behave as desired after putting them in their own div. Used `.closest()` to target nearest project div and added a `data-project` attribute on the project dashboard to link elements and actions.
 
 - Didn't get to
- ~~ - Can edit a project but it doesn't update the project entry~~
+  - ~~Can edit a project but it doesn't update the project entry~~
   - ~~project description does not render when project dashboard renders (currently a textarea entry - need to update to paragraph line)~~
-  -~~ Need to repeat logic sequence and wiring for lists~~
+  - ~~Need to repeat logic sequence and wiring for lists~~
   - ~~Need task updates when their projects and lists are deleted (return to null and rendered in general task list)~~
 
 
