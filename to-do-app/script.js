@@ -484,7 +484,8 @@ if(listData.length) {
 //EVENT LISTENERS ---------------------------------------------------------------------
 addNewBtn.addEventListener('click', () => {
     addNewBtn.ariaExpanded = addNewBtn.ariaExpanded !== 'true' ? 'true' : 'false';
-    createBtnDropdown.classList.toggle('hidden'); // these actions can be placed in a helper since they will need to trigger for the other form buttons once clicked
+    addNewBtn.classList.toggle('selected');
+    createBtnDropdown.classList.toggle('open'); // these actions can be placed in a helper since they will need to trigger for the other form buttons once clicked
 });
 openTaskFormBtn.addEventListener('click', () => {
     taskForm.classList.toggle('hidden');

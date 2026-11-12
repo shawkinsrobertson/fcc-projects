@@ -7,6 +7,8 @@
 - [x] Render everything to UI or log to console to see each step and what breaks
 - [ ] Write errors, dialogues, and empty states
 - [ ] UI: architecture, affordances, validation, layout, animations, responsiveness
+- [ ] Sort, Filter, and Search functions
+- [ ] Task, Project, and List forms should mimic their rendered components (task card, project and list dashboards)
 
 ----------------------------------------------------------------------------------------------
 

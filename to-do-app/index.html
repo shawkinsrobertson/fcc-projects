@@ -34,11 +34,13 @@
     <div class="todo-app">
       <header class="title-and-primarybtn">
         <h1>Do Shit</h1>
-        <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">&#43;</button>
-        <div id="button-dropdown">
-          <button id="open-task-form-btn" type="btn">New Task</button>
-          <button id="open-project-form-btn" type="btn">New Project</button>
-          <button id="open-list-form-btn" type="btn">New List</button>
+        <div class="menu-wrapper">
+          <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">&#43;</button>
+          <div id="button-dropdown" class="menu-panel">
+            <button id="open-task-form-btn" type="btn">New Task</button>
+            <button id="open-project-form-btn" type="btn">New Project</button>
+            <button id="open-list-form-btn" type="btn">New List</button>
+          </div>
         </div>
     </header>
       <form class="task-form hidden" id="task-form">
