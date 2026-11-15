@@ -23,19 +23,16 @@ const dashboard = document.querySelectorAll('.dashboard');
 const taskFormHome = document.getElementById('task-form-home');
 const forms = document.querySelectorAll('.form');
 
-
 //buttons ---------------------------------------------------------------------
 const addNewBtn = document.getElementById('add-new-btn');
 const openTaskFormBtn = document.getElementById('open-task-form-btn');
 const openProjectFormBtn = document.getElementById('open-project-form-btn');
 const openListFormBtn = document.getElementById('open-list-form-btn');
-const closeTaskFormBtn = document.getElementById('close-task-form-btn');
+const closeFormBtns = document.querySelectorAll('.close-form-btn');
 const addOrUpdateTaskBtn = document.getElementById('add-or-update-task-btn');
 const addOrUpdateProjectBtn = document.getElementById('add-or-update-project-btn');
 const addOrUpdateListBtn = document.getElementById('add-or-update-list-btn');
 const cancelBtn = document.getElementById('cancel-btn');
-const closeProjectFormBtn = document.getElementById('close-project-form-btn');
-const closeListFormBtn = document.getElementById('close-list-form-btn');
 const editListBtn = document.getElementById('edit-list-btn');
 const deleteListBtn = document.getElementById('delete-list-btn');
 const editProjectBtn = document.getElementById('edit-project-btn');
@@ -113,6 +110,22 @@ const reset = (type) => {
 
 };
 
+const hasChanges = (form, current = {}) => {
+    const {
+        title = '',
+        date = '',
+        description = '',
+    } = Object.fromEntries(new FormData(form));
+
+    const valuesChanged = title !== (current.title ?? '')|| date !== (current.date ?? '')|| description !== (current.description ?? '');
+    if(valuesChanged) {
+        confirmCloseDialog.showModal();
+    } else {
+        form.classList.toggle('hidden')
+        reset(form.dataset.type);
+    }
+}
+
 
 //TASKS ---------------------------------------------------------------------
 const addOrUpdateTask = () => {
@@ -123,7 +136,7 @@ const addOrUpdateTask = () => {
         return;
     }
     const dataArrIndex = taskData.findIndex(item => item.id === currentTask.id);
-    const parentTask = taskData.filter(item => item.title === parentInput.value);
+    const parentTask = taskData.find(item => item.title.trim().toLowerCase() === parentInput.value.trim().toLowerCase());
     const projectTitle = projectInput.value.trim();
     const listTitle = listInput.value.trim();
     const projectExists = projectData.some(project => project.title.trim().toLowerCase() === projectTitle.toLowerCase());
@@ -133,9 +146,9 @@ const addOrUpdateTask = () => {
         timestamp: Date.now(),
         title: titleInput.value,
         date: dateInput.value,
-        project: projectTitle || null, //should we use project and list id instead of title for storage and future rendering?
-        list: listTitle || null,
-        parentId: parentTask.id || null,
+        project: projectTitle ?? null, //should we use project and list id instead of title for storage and future rendering?
+        list: listTitle ?? null,
+        parentId: parentTask.id ?? null,
         description: descriptionInput.value,
         completed: currentTask.completed ?? false,
     };
@@ -159,6 +172,7 @@ const addOrUpdateTask = () => {
         projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
     }else {
         updateTaskContainer();
+        updateSubtaskContainer();
     };
     updateProjectContainer();
     updateListContainer();
@@ -194,78 +208,157 @@ const editTask = (buttonEl) => {
 };
 
 const updateTaskContainer = () => {
-    tasksContainer.replaceChildren(...taskData.map(createTaskElement));
+    tasksContainer.replaceChildren(...taskData.filter(task => !task.parentId).map(createTaskElement));
+};
+
+const updateSubtaskContainer = () => {
+    document.querySelectorAll('.subtask-container').forEach(container => {
+        const parentTask = container.closest('.task');
+        const subtasks = taskData.filter(task => task.parentId === parentTask.id);
+
+        container.replaceChildren(...subtasks.map(createTaskElement));
+    })
 };
 
 const createTaskElement = (task) => {
     const card = document.createElement('div');
-    card.className = 'task';
-    card.id = task.id;
-    card.classList.toggle('completed', Boolean(task.completed));
 
-    const actions = document.createElement('div');
-    actions.className = 'form-btn-div';
+    if(task.parentId) {
+        card.className = 'subtask';
+        card.id = task.id;
+        card.classList.toggle('completed', Boolean(task.completed));
 
-    const editButton = document.createElement('button');
-    editButton.type = 'button';
-    editButton.className = 'btn';
-    editButton.textContent = 'Edit';
-    editButton.addEventListener('click', () => editTask(editButton));
+        const checkboxTitleContainer = document.createElement('div');
+        checkboxTitleContainer.className = 'task-checkbox';
 
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.className = 'btn';
-    deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', () => deleteTask(deleteButton));
+        const checkbox = document.createElement('input');
+        checkbox.id = task.id
+        checkbox.type = 'checkbox';
+        checkbox.name = 'status';
+        checkbox.value = 'status';
+        checkbox.checked = Boolean(task.completed);
 
-    actions.append(editButton, deleteButton);
+        const title = document.createElement('label');
+        title.className = 'subtask-title';
+        title.htmlFor = task.id;
+        title.textContent = task.title;
 
-    const body = document.createElement('div');
-    body.className = 'task-body';
+        checkboxTitleContainer.append(checkbox, title);
 
-    const content = document.createElement('div');
-    content.className = 'task-content';
+        const actions = document.createElement('div');
+        actions.className = 'form-btn-div';
 
-    const title = document.createElement('p');
-    title.textContent = task.title;
-    content.append(title);
+        const editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.className = 'btn';
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => editTask(editButton));
 
-    if (task.date) {
-        const date = document.createElement('p');
-        date.textContent = task.date.split('-').reverse().join('/');
-        content.append(date);
-    }
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'btn';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => deleteTask(deleteButton));
 
-    if (task.project) {
-        const project = document.createElement('p');
-        project.textContent = task.project;
-        content.append(project);
-    }
+        actions.append(editButton, deleteButton);
 
-    if (task.list) {
-        const list = document.createElement('p');
-        list.textContent = task.list;
-        content.append(list);
-    }
+        card.append(checkboxTitleContainer, actions);
 
-    if (task.description) {
-        const description = document.createElement('p');
-        description.textContent = task.description;
-        content.append(description);
-    }
+    } else {
+        card.className = 'task';
+        card.id = task.id;
+        card.classList.toggle('completed', Boolean(task.completed));
 
-    const checkboxContainer = document.createElement('div');
-    checkboxContainer.className = 'task-checkbox';
+        const actions = document.createElement('div');
+        actions.className = 'form-btn-div';
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.name = 'status';
-    checkbox.value = 'status';
-    checkbox.checked = Boolean(task.completed);
-    checkboxContainer.append(checkbox);
+        const editButton = document.createElement('button');
+        editButton.type = 'button';
+        editButton.className = 'btn';
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => editTask(editButton));
 
-    body.append(content, checkboxContainer);
-    card.append(actions, body);
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'btn';
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => deleteTask(deleteButton));
+
+        actions.append(editButton, deleteButton);
+
+        const body = document.createElement('div');
+        body.className = 'task-body';
+
+        const content = document.createElement('div');
+        content.className = 'task-content';
+
+        const title = document.createElement('p');
+        title.textContent = task.title;
+        content.append(title);
+
+        if (task.date) {
+            const date = document.createElement('p');
+            date.textContent = task.date.split('-').reverse().join('/');
+            content.append(date);
+        }
+
+        if (task.project) {
+            const project = document.createElement('p');
+            project.textContent = task.project;
+            content.append(project);
+        }
+
+        if (task.list) {
+            const list = document.createElement('p');
+            list.textContent = task.list;
+            content.append(list);
+        }
+
+        if (task.description) {
+            const description = document.createElement('p');
+            description.textContent = task.description;
+            content.append(description);
+        }
+
+        const checkboxContainer = document.createElement('div');
+        checkboxContainer.className = 'task-checkbox';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'status';
+        checkbox.value = 'status';
+        checkbox.checked = Boolean(task.completed);
+        checkboxContainer.append(checkbox);
+
+        const subtasks = document.createElement('div');
+        subtasks.className = 'subtasks';
+
+        const subtasksAddDiv = document.createElement('div');
+        subtasksAddDiv.className = 'subtasks-header';
+
+        //const chevron = document.createElement('div');
+        
+        const subtasksTitle = document.createElement('p');
+        subtasksTitle.className = 'subtasks-title';
+        subtasksTitle.textContent = 'subtasks';
+
+        const addSubtasksBtn = document.createElement('button');
+        addSubtasksBtn.className = 'btn';
+        addSubtasksBtn.textContent = '+ add';
+
+        subtasksAddDiv.append(subtasksTitle, addSubtasksBtn);
+
+        const subtaskContainer = document.createElement('div');
+        subtaskContainer.className = 'subtask-container';
+        
+        
+        subtasks.append(subtasksAddDiv, subtaskContainer);
+
+        body.append(content, checkboxContainer);
+        card.append(actions, body, subtasks);
+
+    };
+    
     return card;
 };
 
@@ -516,6 +609,7 @@ const toggleFormViz = (formEl) => {
 
 if(taskData.length) {
     updateTaskContainer();
+    updateSubtaskContainer()
 }
 if(projectData.length) {
     updateProjectContainer();
@@ -536,43 +630,21 @@ openTaskFormBtn.addEventListener('click', (e) => {
     toggleFormViz(taskForm);
 });
 openProjectFormBtn.addEventListener('click', () => {toggleFormViz(projectForm)});
+
 openListFormBtn.addEventListener('click', () => {toggleFormViz(listForm)});
 
-closeTaskFormBtn.addEventListener('click', () => {
-    const formInputValuesUpdated = titleInput.value !== currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description;
-    if(titleInput.value || dateInput.value || descriptionInput.value && formInputValuesUpdated) {
-        confirmCloseDialog.showModal();
-    } else {
-        taskForm.classList.toggle('hidden')
-        reset('task');
-    }
-});
-
-closeProjectFormBtn.addEventListener('click', () => {
-    const formInputValuesUpdated = projectFormTitle.value !== currentProject.title || projectFormDate.value !== currentProject.date || projectFormDescription.value !== currentProject.description;
-    if(projectFormTitle.value || projectFormDate.value || projectFormDescription.value && formInputValuesUpdated) {
-        confirmCloseDialog.showModal();
-    } else {
-        projectForm.classList.toggle('hidden')
-        reset('project');
-    }
-});
-
-closeListFormBtn.addEventListener('click', () => {
-    const formInputValuesUpdated = listFormTitle.value !== currentList.title || listFormDate.value !== currentList.date || listFormDescription.value !== currentList.description;
-    if(listFormTitle.value || listFormDate.value || listFormDescription.value && formInputValuesUpdated) {
-        confirmCloseDialog.showModal();
-    } else {
-        listForm.classList.toggle('hidden')
-        reset('list');
-    }
-});
+closeFormBtns.forEach(button => button.addEventListener('click', (e) => {
+    const form = e.currentTarget.form;
+    hasChanges(form);
+}))
 
 cancelBtn.addEventListener('click', () => {confirmCloseDialog.close()});
 
 discardBtn.addEventListener('click', () => {
     confirmCloseDialog.close()
-    reset(); // this does not reset all forms
+    const visibleForm = [taskForm, projectForm, listForm]
+        .find(form => getComputedStyle(form).display !== 'none').dataset.type;
+    reset(visibleForm);
 });
 
 taskForm.addEventListener('submit', (e) => {

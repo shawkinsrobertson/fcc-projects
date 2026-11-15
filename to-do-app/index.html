@@ -44,25 +44,25 @@
         </div>
     </header>
       <div id="task-form-home">
-        <form class="form hidden" id="task-form">
+        <form class="form hidden" id="task-form" data-type="task">
           <div class="task-form-header">
-            <button id="close-task-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+            <button id="close-task-form-btn" class="close-form-btn" type="button" aria-label="close">
               <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
             </button>
           </div>
           <div class="task-form-body">
-              <label class="form-label" for="task-title-input">Name</label>
-              <input required type="text" class="form-control" id="task-title-input" value="" />
+              <label class="form-label" for="task-title-input" >Name</label>
+              <input required type="text" class="form-control" id="task-title-input" name="title" value="" />
               <label class="form-label" for="task-date-input">Date</label>
-              <input type="date" class="form-control" id="task-date-input" value="" />
+              <input type="date" class="form-control" id="task-date-input" name="date" value="" />
               <label class="form-label" for="task-project-input">Project</label>
-              <input type="text" class="form-control" id="task-project-input" value="" />
+              <input type="text" class="form-control" id="task-project-input" name="project" value="" />
               <label class="form-label" for="task-list-input">List</label>
-              <input type="text" class="form-control" id="task-list-input" value="" />
+              <input type="text" class="form-control" id="task-list-input" name="list" value="" />
               <label class="form-label" for="task-parent-input">Parent task?</label>
-              <input type="text" class="form-control" id="task-parent-input" value="" />
+              <input type="text" class="form-control" id="task-parent-input" name="parent-task" value="" />
               <label class="form-label" for="task-description-input">Description</label>
-              <textarea class="form-control" id="task-description-input" cols="30" rows="5"></textarea>
+              <textarea class="form-control" name="description" id="task-description-input" cols="30" rows="5"></textarea>
           </div>
           <div class="task-form-footer">
             <button id="add-or-update-task-btn" class="btn large-btn" type="submit">
@@ -71,19 +71,19 @@
           </div>
         </form>
       </div>
-      <form class="form hidden" id="project-form">
+      <form class="form hidden" id="project-form" data-type="project">
         <div class="project-form-header">
-          <button id="close-project-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+          <button id="close-project-form-btn" class="close-form-btn" type="button" aria-label="close">
             <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
           </button>
         </div>
         <div class ='project-form-body'>
           <label class="form-label" for="project-title-input">Name</label>
-              <input required type="text" class="form-control" id="project-title-input" value="" />
+              <input required type="text" class="form-control" id="project-title-input" name="title" value="" />
             <label class="form-label" for="project-date-input">Date</label>
-              <input type="date" class="form-control" id="project-date-input" value="" />
+              <input type="date" class="form-control" id="project-date-input" name="date" value="" />
             <label class="form-label" for="project-description-input">Description</label>
-              <textarea class="form-control" id="project-description-input" cols="30" rows="5"></textarea>
+              <textarea class="form-control" name="description" id="project-description-input" cols="30" rows="5"></textarea>
           </div>
             <div class="form-footer">
           <button id="add-or-update-project-btn" class="btn large-btn" type="submit">
@@ -91,19 +91,19 @@
           </button>
         </div>
       </form>
-      <form class="form hidden" id="list-form">
+      <form class="form hidden" id="list-form" data-type="list">
         <div class="list-form-header">
-          <button id="close-list-form-btn" class="close-task-form-btn" type="button" aria-label="close">
+          <button id="close-list-form-btn" class="close-form-btn" type="button" aria-label="close">
             <svg class="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="48px"><path fill="#F44336" d="M21.5 4.5H26.501V43.5H21.5z" transform="rotate(45.001 24 24)" /><path fill="#F44336" d="M21.5 4.5H26.5V43.501H21.5z" transform="rotate(135.008 24 24)" /></svg>
           </button>
         </div>
         <div class="list-form-body">
           <label class="form-label" for="list-title-input">Name</label>
-              <input required type="text" class="form-control" id="list-title-input" value="" />
+              <input required type="text" class="form-control" id="list-title-input" name="title" value="" />
             <label class="form-label" for="list-date-input">Date</label>
-              <input type="date" class="form-control" id="list-date-input" value="" />
+              <input type="date" class="form-control" id="list-date-input" name="date" value="" />
             <label class="form-label" for="list-description-input">Description</label>
-              <textarea class="form-control" id="list-description-input" cols="30" rows="5"></textarea>
+              <textarea class="form-control" name="description" id="list-description-input" cols="30" rows="5"></textarea>
         </div>
             <div class="form-footer">
           <button id="add-or-update-list-btn" class="btn large-btn" type="submit">

@@ -12,6 +12,10 @@
 - [ ] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
+### 11/14/2026
+- Created subtasks creation condition in `createTaskElement()`, styled rendering, add button (not wired yet) and commented in collapsable chevron (need icons)
+
+
 ### 11/12/2026
 - Logic for moving the form location into/out of project and list dashboards based on dashboard visibility state
 - Fixed task container visibility when inside dashboard

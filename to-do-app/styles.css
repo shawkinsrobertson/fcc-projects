@@ -238,6 +238,24 @@ h1 {
   font-weight: bold;
 }
 
+.subtask {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.subtasks-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.task-checkbox {
+  display: flex;
+  gap: 12px;
+  margin-left: 1.3rem;
+}
+
 /* Task, project, and list forms */
 .form {
   display: flex;
@@ -354,7 +372,7 @@ h1 {
   justify-self: center;
 }
 
-.close-task-form-btn {
+.close-form-btn {
   background: none;
   border: none;
   cursor: pointer;
