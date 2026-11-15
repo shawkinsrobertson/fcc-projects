@@ -18,17 +18,20 @@
         <button id="sidebar-close-btn" aria-label="close" type="button">X</button>
       </div>
       <div class="projects">
-        <h3>Projects</h3>
-        <button id="delete-projects-btn" class="btn">delete projects</button>
-        <div id="project-container">
+        <div id='projects-header-sidebar'>
+          <h3>Projects</h3>
+          <button title='Create a new project' class="icon-btn"><i data-feather="folder-plus"></i></button>
         </div>
+        <button id="delete-projects-btn">delete projects</button>
+        <div id="project-container"></div>
       </div>
       <div class="lists">
-        <h3>Lists</h3>
-        <button id="delete-lists-btn" class="btn">delete lists</button>
-        <div id="list-container">
-          
-        </div>
+        <div id="lists-header-sidebar">
+           <h3>Lists</h3>
+           <button title='Create a new list' class="icon-btn"><i data-feather="file-plus"></i></button>
+        </div>       
+        <button id="delete-lists-btn">delete lists</button>
+        <div id="list-container"></div>
       </div>
     </div>
     <div class="todo-app">
@@ -43,6 +46,13 @@
           </div>
         </div>
     </header>
+    <div id="search-and-sort">
+          <input type="search" id="search" name="search" placeholder="search tasks, projects, lists" />
+          <div id="chips">
+            <button id="sort-alpha" class="chip">A-Z</button>
+            <button id="sort-due-first" class="chip">Due: first-last</button>
+          </div>
+        </div>
       <div id="task-form-home">
         <form class="form hidden" id="task-form" data-type="task">
           <div class="task-form-header">
@@ -152,9 +162,11 @@
         </div>
         <div class="filtered-task-list"></div>
       </div>
-      <div id="tasks-container"></div>
+      <div id="tasks-container">
+      </div>
     </div>
   </main>
+  <script src="libraries/feather.js"></script>
   <script src="script.js"></script>
 </body>
 

@@ -126,6 +126,12 @@ const hasChanges = (form, current = {}) => {
     }
 }
 
+const toggleCollapsable = (el) => {
+    const subtaskLists = Array.from(document.querySelectorAll('.subtask-container'));
+    const subtaskList = subtaskLists.find(list => list.id === el.dataset.list);
+    subtaskList.classList.toggle('hidden');
+}
+
 
 //TASKS ---------------------------------------------------------------------
 const addOrUpdateTask = () => {
@@ -170,6 +176,7 @@ const addOrUpdateTask = () => {
     if(visibleDashboard) {
         const tasksToRender = taskData.filter(tasks => tasks.project === projectTitle);
         projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+        feather.replace();
     }else {
         updateTaskContainer();
         updateSubtaskContainer();
@@ -209,20 +216,23 @@ const editTask = (buttonEl) => {
 
 const updateTaskContainer = () => {
     tasksContainer.replaceChildren(...taskData.filter(task => !task.parentId).map(createTaskElement));
+    feather.replace();
 };
 
 const updateSubtaskContainer = () => {
     document.querySelectorAll('.subtask-container').forEach(container => {
         const parentTask = container.closest('.task');
         const subtasks = taskData.filter(task => task.parentId === parentTask.id);
-
         container.replaceChildren(...subtasks.map(createTaskElement));
     })
+
+    feather.replace();
 };
 
 const createTaskElement = (task) => {
     const card = document.createElement('div');
 
+    //for subtasks
     if(task.parentId) {
         card.className = 'subtask';
         card.id = task.id;
@@ -264,7 +274,7 @@ const createTaskElement = (task) => {
 
         card.append(checkboxTitleContainer, actions);
 
-    } else {
+    } else { //for parent tasks
         card.className = 'task';
         card.id = task.id;
         card.classList.toggle('completed', Boolean(task.completed));
@@ -333,10 +343,23 @@ const createTaskElement = (task) => {
         const subtasks = document.createElement('div');
         subtasks.className = 'subtasks';
 
-        const subtasksAddDiv = document.createElement('div');
-        subtasksAddDiv.className = 'subtasks-header';
 
-        //const chevron = document.createElement('div');
+        const subtasksHeader = document.createElement('div');
+        subtasksHeader.className = 'subtasks-header';
+
+        if(taskData.some(item => item.parentId === task.id)) {
+            const collapseBtn = document.createElement('button');
+            collapseBtn.className = 'icon-btn';
+            collapseBtn.dataset.list = task.id;
+            collapseBtn.addEventListener('click', () => toggleCollapsable(collapseBtn));
+
+            const icon = document.createElement('i');
+            icon.dataset.feather = 'chevron-down';
+
+            collapseBtn.append(icon);
+            subtasksHeader.append(collapseBtn);
+        };
+
         
         const subtasksTitle = document.createElement('p');
         subtasksTitle.className = 'subtasks-title';
@@ -346,13 +369,13 @@ const createTaskElement = (task) => {
         addSubtasksBtn.className = 'btn';
         addSubtasksBtn.textContent = '+ add';
 
-        subtasksAddDiv.append(subtasksTitle, addSubtasksBtn);
+        subtasksHeader.append(subtasksTitle, addSubtasksBtn);
 
         const subtaskContainer = document.createElement('div');
         subtaskContainer.className = 'subtask-container';
+        subtaskContainer.id = task.id;
         
-        
-        subtasks.append(subtasksAddDiv, subtaskContainer);
+        subtasks.append(subtasksHeader, subtaskContainer);
 
         body.append(content, checkboxContainer);
         card.append(actions, body, subtasks);
@@ -554,6 +577,7 @@ const renderProject = (e) => {
     projectTitle.innerHTML = projectToRender.title;
     projectDashboardDescription.innerHTML = projectToRender.description ? projectToRender.description : '';
     projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+    feather.replace();
 };
 
 const renderList = (e) => {
@@ -568,6 +592,7 @@ const renderList = (e) => {
     listDashboardDescription.innerHTML = listToRender.description ? listToRender.description : '';
     const tasksToRender = taskData.filter(tasks => tasks.list === listElement.id);
     listTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+    feather.replace();
 
 };
 
@@ -622,7 +647,7 @@ if(listData.length) {
 //EVENT LISTENERS ---------------------------------------------------------------------
 addNewBtn.addEventListener('click', () => {
     addNewBtn.ariaExpanded = addNewBtn.ariaExpanded !== 'true' ? 'true' : 'false';
-    reset('button'); // these actions can be placed in a helper since they will need to trigger for the other form buttons once clicked
+    reset('button');
 });
 openTaskFormBtn.addEventListener('click', (e) => {
     setForm();

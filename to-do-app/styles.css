@@ -146,6 +146,13 @@ h1 {
   margin-bottom: 2rem;
 }
 
+#projects-header-sidebar, #lists-header-sidebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
 #logo {
   height: 68px;
   width: 68px;
@@ -153,6 +160,42 @@ h1 {
   max-height: 100px;
   background-color: lightskyblue;
   border-radius: 25px;
+}
+
+/* Search and sort elements */
+
+#search-and-sort {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 12px 24px;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+}
+
+.chip {
+  padding: 12px;
+  border-radius: 20px;
+  background-color: var(--bg);
+  border: none;
+  box-shadow: 2px 2px 6px -1px rgba(80, 106, 117, 0.3);
+}
+
+#search {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  outline: none;
+  background: transparent;
+  border-radius: 8px;
+  padding: 12px;
+  height: 2.5rem;
+  flex: 1 1 auto;
+
 }
 
 /* Project and list dashboards */
@@ -247,13 +290,31 @@ h1 {
 .subtasks-header {
   display: flex;
   gap: 12px;
+  align-items: center;
   margin-bottom: 4px;
+}
+
+.subtask-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .task-checkbox {
   display: flex;
   gap: 12px;
   margin-left: 1.3rem;
+}
+
+.icon-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 24px;
+  min-height: 24px;
+  background-color: transparent;
+  border: none;
+  margin: none;
 }
 
 /* Task, project, and list forms */
