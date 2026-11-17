@@ -12,6 +12,20 @@
 - [ ] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
+### 11/16/2026
+- Observations
+  - Primary task in a project, when assigned a parent task, takes on subtask styling and stays inside project dashboard. 
+  - ~~Edit task modal does not close after selecting 'discard'.~~
+
+- Created
+  - `sortByAlpha()`, `sortByDueDate()` helpers and added event listeners to `sortAlphaBtn` and `sortDueFirstBtn`.
+  - Created search event listener and logic. (haven't moved logic to helper function yet)
+  - State styling for sort buttons
+  
+  - Fixed
+    - Discard button not closing form when clicked.
+
+
 ### 11/14/2026
 - Created subtasks creation condition in `createTaskElement()`, styled the rendering, add button (not wired yet) and chevron button that collapses/expands subtask list
 - Added feather icon set to project
@@ -19,10 +33,10 @@
 - Added icon buttons to create new project/list in sidebar. Will eventually replace combo button in header (will return to task creation only)
 
 - Bugs
-  - When I mark a subtask complete, the subtask does not get a completed class added to it, but the parent task does
-  - Edit/Delete buttons on subtasks do not edit subtasks but the main task.
+  - ~~When I mark a subtask complete, the subtask does not get a completed class added to it, but the parent task does~~
+  - ~~Edit/Delete buttons on subtasks do not edit subtasks but the main task.~~
   - Human readable date on task cards is DD/MM/YYYY. Should be able to change date format to user's preference.
-  - When tasks render inside a project, their subtasks do not render.
+  - ~~When tasks render inside a project, their subtasks do not render.~~
   - No way to get back 'home' once inside a project or list. 
 
 

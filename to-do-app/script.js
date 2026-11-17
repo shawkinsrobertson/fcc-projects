@@ -39,6 +39,9 @@ const editProjectBtn = document.getElementById('edit-project-btn');
 const deleteProjectBtn = document.getElementById('delete-project-btn');
 const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
 const addTaskInlineBtn = document.querySelectorAll('.add-task-inline-btn');
+const search = document.getElementById('search');
+const sortAlphaBtn = document.getElementById('sort-alpha');
+const sortDueFirstBtn = document.getElementById('sort-due-first');
 
 const deleteListsBtn = document.getElementById('delete-lists-btn');
 const deleteProjectsBtn = document.getElementById('delete-projects-btn');
@@ -74,6 +77,9 @@ let currentList = {};
 //     const cleanStr = str.replace(/[^a-zA-Z0-9 ]/g, '');
 //     return cleanStr;
 // }
+let alphaSort = false;
+let dueDateSort = false;
+
 
 //GENERAL HELPERS ---------------------------------------------------------------------
 const reset = (type) => {
@@ -121,7 +127,7 @@ const hasChanges = (form, current = {}) => {
     if(valuesChanged) {
         confirmCloseDialog.showModal();
     } else {
-        form.classList.toggle('hidden')
+        form.classList.toggle('hidden');
         reset(form.dataset.type);
     }
 }
@@ -131,6 +137,37 @@ const toggleCollapsable = (el) => {
     const subtaskList = subtaskLists.find(list => list.id === el.dataset.list);
     subtaskList.classList.toggle('hidden');
 }
+
+const sortByAlpha = () => {
+    alphaSort = !alphaSort;
+    if(alphaSort) {
+    const sortedTasks = taskData.filter(task => !task.parentId).sort((a,b) => {
+    return a.title < b.title ? -1 : 1});
+    tasksContainer.replaceChildren(...sortedTasks.filter(task => !task.parentId).map(createTaskElement));
+    sortAlphaBtn.classList.add('active');
+   } else {
+    tasksContainer.replaceChildren(...taskData.filter(task => !task.parentId).map(createTaskElement));
+    sortAlphaBtn.classList.remove('active');
+   }
+    updateSubtaskContainer();
+};
+
+const sortByDueDate = () => {
+    dueDateSort = !dueDateSort;
+    if(dueDateSort) {
+const sortedTasks = taskData.filter(task => !task.parentId).sort((a,b) => {
+       const aMs = Date.parse(a.date);
+       const bMs = Date.parse(b.date);
+       return a.date < b.date ? -1 : 1;
+    });
+    tasksContainer.replaceChildren(...sortedTasks.filter(task => !task.parentId).map(createTaskElement));
+    sortDueFirstBtn.classList.add('active');
+    } else {
+    tasksContainer.replaceChildren(...taskData.filter(task => !task.parentId).map(createTaskElement));
+    sortDueFirstBtn.classList.remove('active');
+    };
+    updateSubtaskContainer();  
+};
 
 
 //TASKS ---------------------------------------------------------------------
@@ -200,15 +237,18 @@ const deleteTask = (buttonEl) => {
 };
 
 const editTask = (buttonEl) => {
-    const taskCard = buttonEl.closest('.task');
+    const taskCard = buttonEl.closest('.task, .subtask');
+    console.log(taskCard);
     taskForm.classList.toggle('hidden');
     const dataArrIndex = taskData.findIndex(item => item.id === taskCard.id);
     currentTask = taskData[dataArrIndex];
+    const parentTaskName = taskData.find(task => task.id === currentTask.parentId);
+    console.log(parentTaskName)
     titleInput.value = currentTask.title;
     dateInput.value = currentTask.date;
     projectInput.value = currentTask.project;
     listInput.value = currentTask.list;
-    parentInput.value = currentTask.parentId;
+    parentInput.value = parentTaskName.title;
     descriptionInput.value = currentTask.description;
     addOrUpdateTaskBtn.innerText = 'Update Task';
 
@@ -577,6 +617,7 @@ const renderProject = (e) => {
     projectTitle.innerHTML = projectToRender.title;
     projectDashboardDescription.innerHTML = projectToRender.description ? projectToRender.description : '';
     projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+    updateSubtaskContainer();
     feather.replace();
 };
 
@@ -667,9 +708,10 @@ cancelBtn.addEventListener('click', () => {confirmCloseDialog.close()});
 
 discardBtn.addEventListener('click', () => {
     confirmCloseDialog.close()
-    const visibleForm = [taskForm, projectForm, listForm]
-        .find(form => getComputedStyle(form).display !== 'none').dataset.type;
-    reset(visibleForm);
+    const currentForm = [taskForm, projectForm, listForm]
+        .find(form => getComputedStyle(form).display !== 'none');
+    reset(currentForm.dataset.type);
+    currentForm.classList.toggle('hidden');
 });
 
 taskForm.addEventListener('submit', (e) => {
@@ -712,9 +754,9 @@ sidebarCloseBtn.addEventListener('click', () => {
 })
 
 todoApp.addEventListener('change', (event) => {
-    if (!event.target.matches('.task input[type="checkbox"]')) return;
+    if (!event.target.matches('.task input[type="checkbox"], .subtask input[type="checkbox"]')) return;
 
-    const taskElement = event.target.closest('.task');
+    const taskElement = event.target.closest('.task, .subtask');
     const taskToUpdate = taskData.find(task => task.id === taskElement.id);
     if (!taskToUpdate) return;
 
@@ -725,7 +767,26 @@ todoApp.addEventListener('change', (event) => {
 
 addTaskInlineBtn.forEach(button => button.addEventListener('click', () => {
     setForm();
-}))
+}));
+
+search.addEventListener('input', (e) => { //searches current task list only
+    const query = e.target.value.trim().toLowerCase();
+    const searchList = document.getElementById('tasks-container');
+    const items = searchList.querySelectorAll('.task-content');
+
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        const card = item.closest('.task');
+
+        card.style.display = text.includes(query) ? 'flex' : 'none';
+    });
+
+});
+
+
+sortAlphaBtn.addEventListener('click', () => sortByAlpha());
+
+sortDueFirstBtn.addEventListener('click', () => sortByDueDate());
 
 
 //temp event listeners for testing purposes. delete later!

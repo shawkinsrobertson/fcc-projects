@@ -198,6 +198,12 @@ h1 {
 
 }
 
+.active {
+  background-color:rgb(65, 120, 222);
+  color: white;
+  box-shadow: none;
+}
+
 /* Project and list dashboards */
 #project-dashboard, #list-dashboard {
   display: none;
