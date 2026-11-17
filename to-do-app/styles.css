@@ -31,14 +31,15 @@ h1 {
 
 /* Main application container */
 .todo-app {
-  margin: auto;
+  margin: 0 auto;
   background-color: var(--bg);
-  height:100vh;
+  height: 100vh;
   padding: 15px;
   display: flex;
   flex-direction: column;
   flex: 1;
   min-width: 0;
+  overflow: hidden;
   gap: 10px;
 }
 
@@ -121,7 +122,7 @@ h1 {
   margin: 0 auto;
   padding: 24px;
   height: 100vh;
-  width: 25%;
+  width: 20%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -133,7 +134,12 @@ h1 {
 
 .menu-sidebar.collapsed {
   flex-basis: 5%; /* menu icon size*/
-    h2, #logo {
+  align-items: center;
+  #projects-header-sidebar, #lists-header-sidebar {
+    justify-content: center;
+  }
+    #project-container, #list-container, #projects-header-sidebar > h3,
+    #lists-header-sidebar > h3 {
       display: none;
     }
 }
@@ -154,12 +160,24 @@ h1 {
 }
 
 #logo {
-  height: 68px;
-  width: 68px;
-  max-width: 100px;
-  max-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 68px;
+  min-width: 68px;
+  aspect-ratio: 1/1;
   background-color: lightskyblue;
   border-radius: 25px;
+  border: none;
+  outline: none;
+  padding: 12px;
+}
+
+.poop {
+  font-size: 4rem;
+  margin: 0;
+  padding: 0;
 }
 
 /* Search and sort elements */
@@ -169,6 +187,7 @@ h1 {
   justify-content: space-between;
   gap: 32px;
   padding: 12px 24px;
+  flex-shrink: 0;
 }
 
 .chips {
@@ -231,6 +250,7 @@ h1 {
   justify-content: space-between;
   gap: 20px;
   padding: 16px;
+  flex-shrink: 0;
   border-bottom: 0.5px solid lightcyan;
   box-shadow: 0 4px 8px -8px rgba(2, 45, 64, 0.3);
 }
@@ -238,19 +258,26 @@ h1 {
 .filtered-task-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 12px;
   justify-content: center;
 }
 
 #tasks-container {
-  width: min(100%, 40rem);
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
   min-width: 0;
   overflow-y: auto;
 }
 
 .task {
   width: 100%;
+  max-width: 720px;
   display: flex;
   flex-direction: column;
   align-items: stretch;

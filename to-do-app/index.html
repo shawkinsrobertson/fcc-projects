@@ -13,24 +13,22 @@
   <main>
     <div class="menu-sidebar">
       <div id="sidebar-header">
-        <div id="logo"></div>
-        <h2 id="wordmark">Do Shit</h2>
-        <button id="sidebar-close-btn" aria-label="close" type="button">X</button>
+        <button id="logo" aria-label="close" type="button"><span class="poop">💩</span></button>
       </div>
       <div class="projects">
         <div id='projects-header-sidebar'>
           <h3>Projects</h3>
-          <button title='Create a new project' class="icon-btn"><i data-feather="folder-plus"></i></button>
+          <button title='Create a new project' class="icon-btn" ><i id="project-icon-toggle" data-feather="folder-plus"></i></button>
         </div>
-        <button id="delete-projects-btn">delete projects</button>
+        <!-- <button id="delete-projects-btn">delete projects</button> -->
         <div id="project-container"></div>
       </div>
       <div class="lists">
         <div id="lists-header-sidebar">
            <h3>Lists</h3>
-           <button title='Create a new list' class="icon-btn"><i data-feather="file-plus"></i></button>
+           <button title='Create a new list' class="icon-btn" ><i id="list-icon-toggle" data-feather="file-plus"></i></button>
         </div>       
-        <button id="delete-lists-btn">delete lists</button>
+        <!-- <button id="delete-lists-btn">delete lists</button> -->
         <div id="list-container"></div>
       </div>
     </div>

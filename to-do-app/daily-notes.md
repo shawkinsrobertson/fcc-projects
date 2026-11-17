@@ -7,11 +7,24 @@
 - [x] Render everything to UI or log to console to see each step and what breaks
 - [ ] Write errors, dialogues, and empty states
 - [ ] UI: architecture, affordances, validation, layout, animations, responsiveness
-- [ ] Sort, Filter, and Search functions
+- [x] Sort, Filter, and Search functions
 - [ ] Task, Project, and List forms should mimic their rendered components (task card, project and list dashboards)
-- [ ] PR once dashboard and reset/discard bugs are fixed
+- [x] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
+### 11/17/2026
+- Keep meaning to fix innerHTML/textContent: project/list/dashboard rendering still interpolates raw titles into innerHTML.
+
+
+
+- Bugs (from audit):
+  - ⁠Duplicate IDs in the DOM - a task card and its subtask container both get the same id, and subtask checkboxes too.
+  - The discard dialog fires even when you change nothing while editing. `hasChanges` is diffing against empty values instead of the current task.
+  - Following up on comment: "should we use project and list id instead of title?" - yes. Duplicate titles or punctuation will break lookups.
+  - ⁠Small: you shadow `projectTitle` with a local inside `addOrUpdateTask`.
+
+
+
 ### 11/16/2026
 - Observations
   - Primary task in a project, when assigned a parent task, takes on subtask styling and stays inside project dashboard. 
@@ -68,7 +81,7 @@
 
 
 - STILL TO DO
-  - `reset()` on the `discardBtn` does not reset by type. Causing UI issues.
+  - ~~`reset()` on the `discardBtn` does not reset by type. Causing UI issues.~~
   - ~~After editing a task inside a project the task-container is visible under the filtered task list.~~
   - ~~'create project' and 'create list' buttons.~~
   - ~~Create ability to add a task inside a project or list~~

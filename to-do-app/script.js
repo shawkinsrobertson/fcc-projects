@@ -37,14 +37,15 @@ const editListBtn = document.getElementById('edit-list-btn');
 const deleteListBtn = document.getElementById('delete-list-btn');
 const editProjectBtn = document.getElementById('edit-project-btn');
 const deleteProjectBtn = document.getElementById('delete-project-btn');
-const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+const sidebarCloseBtn = document.getElementById('logo');
 const addTaskInlineBtn = document.querySelectorAll('.add-task-inline-btn');
 const search = document.getElementById('search');
 const sortAlphaBtn = document.getElementById('sort-alpha');
 const sortDueFirstBtn = document.getElementById('sort-due-first');
 
-const deleteListsBtn = document.getElementById('delete-lists-btn');
-const deleteProjectsBtn = document.getElementById('delete-projects-btn');
+
+// const deleteListsBtn = document.getElementById('delete-lists-btn');
+// const deleteProjectsBtn = document.getElementById('delete-projects-btn');
 
 //inputs and dialog ---------------------------------------------------------------------
 const confirmCloseDialog = document.getElementById('confirm-close-dialog');
@@ -748,7 +749,12 @@ listContainer.addEventListener('click', (e) => {
 });
 
 sidebarCloseBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
+    const isCollapsed = sidebar.classList.toggle('collapsed');
+    const projectIconBtn = document.querySelector('#projects-header-sidebar .icon-btn');
+    const listIconBtn = document.querySelector('#lists-header-sidebar .icon-btn');
+    projectIconBtn.innerHTML = `<i data-feather="${isCollapsed ? 'folder' : 'folder-plus'}"></i>`;
+    listIconBtn.innerHTML = `<i data-feather="${isCollapsed ? 'file' : 'file-plus'}"></i>`;
+    feather.replace();
 })
 
 todoApp.addEventListener('change', (event) => {
@@ -788,13 +794,13 @@ sortDueFirstBtn.addEventListener('click', () => sortByDueDate());
 
 
 //temp event listeners for testing purposes. delete later!
-deleteProjectsBtn.addEventListener('click', () => {
-    projectData.length = 0;
-    localStorage.removeItem('projects');
-    updateProjectContainer();
-});
-deleteListsBtn.addEventListener('click', () => {
-    listData.length = 0;
-    localStorage.removeItem('lists');
-    updateListContainer();
-});
+// deleteProjectsBtn.addEventListener('click', () => {
+//     projectData.length = 0;
+//     localStorage.removeItem('projects');
+//     updateProjectContainer();
+// });
+// deleteListsBtn.addEventListener('click', () => {
+//     listData.length = 0;
+//     localStorage.removeItem('lists');
+//     updateListContainer();
+// });
