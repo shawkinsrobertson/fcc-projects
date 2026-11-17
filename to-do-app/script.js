@@ -238,12 +238,10 @@ const deleteTask = (buttonEl) => {
 
 const editTask = (buttonEl) => {
     const taskCard = buttonEl.closest('.task, .subtask');
-    console.log(taskCard);
     taskForm.classList.toggle('hidden');
     const dataArrIndex = taskData.findIndex(item => item.id === taskCard.id);
     currentTask = taskData[dataArrIndex];
     const parentTaskName = taskData.find(task => task.id === currentTask.parentId);
-    console.log(parentTaskName)
     titleInput.value = currentTask.title;
     dateInput.value = currentTask.date;
     projectInput.value = currentTask.project;
