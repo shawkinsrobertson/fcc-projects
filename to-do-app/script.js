@@ -318,6 +318,25 @@ const createTaskElement = (task) => {
         card.id = task.id;
         card.classList.toggle('completed', Boolean(task.completed));
 
+        const header = document.createElement('div');
+        header.className = 'task-header';
+
+        const checkboxContainer = document.createElement('div');
+        checkboxContainer.className = 'task-checkbox';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = 'status';
+        checkbox.value = 'status';
+        checkbox.checked = Boolean(task.completed);
+        
+
+
+        const title = document.createElement('p');
+        title.className = 'task-title';
+        title.textContent = task.title;
+        checkboxContainer.append(checkbox, title);
+
         const actions = document.createElement('div');
         actions.className = 'form-btn-div';
 
@@ -334,6 +353,7 @@ const createTaskElement = (task) => {
         deleteButton.addEventListener('click', () => deleteTask(deleteButton));
 
         actions.append(editButton, deleteButton);
+        header.append(checkboxContainer, actions);
 
         const body = document.createElement('div');
         body.className = 'task-body';
@@ -341,43 +361,35 @@ const createTaskElement = (task) => {
         const content = document.createElement('div');
         content.className = 'task-content';
 
-        const title = document.createElement('p');
-        title.textContent = task.title;
-        content.append(title);
 
         if (task.date) {
             const date = document.createElement('p');
+            date.className = 'task-date';
             date.textContent = task.date.split('-').reverse().join('/');
             content.append(date);
         }
 
         if (task.project) {
             const project = document.createElement('p');
+            project.className = 'task-project-label';
             project.textContent = task.project;
             content.append(project);
         }
 
         if (task.list) {
             const list = document.createElement('p');
+            list.className = 'task-list-label';
             list.textContent = task.list;
             content.append(list);
         }
 
         if (task.description) {
             const description = document.createElement('p');
+            description.className = 'task-description';
             description.textContent = task.description;
             content.append(description);
         }
 
-        const checkboxContainer = document.createElement('div');
-        checkboxContainer.className = 'task-checkbox';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.name = 'status';
-        checkbox.value = 'status';
-        checkbox.checked = Boolean(task.completed);
-        checkboxContainer.append(checkbox);
 
         const subtasks = document.createElement('div');
         subtasks.className = 'subtasks';
@@ -416,8 +428,8 @@ const createTaskElement = (task) => {
         
         subtasks.append(subtasksHeader, subtaskContainer);
 
-        body.append(content, checkboxContainer);
-        card.append(actions, body, subtasks);
+        body.append(content);
+        card.append(header, body, subtasks);
 
     };
     

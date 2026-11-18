@@ -291,6 +291,11 @@ h1 {
   margin: 5px 0;
 }
 
+.task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .task-body {
   display: flex;
   align-items: flex-start;
@@ -305,11 +310,11 @@ h1 {
   flex: 1;
 }
 
-.task-content > p:last-of-type {
+.task-description {
   color: var(--text-s);
 }
 
-.task-content > p:first-of-type {
+.task-title {
   font-size: 1.1rem;
   font-weight: bold;
 }
@@ -335,8 +340,9 @@ h1 {
 
 .task-checkbox {
   display: flex;
+  align-items: center;
   gap: 12px;
-  margin-left: 1.3rem;
+  
 }
 
 .icon-btn {
