@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css"/>
+    <title>KB Clippy</title>
+  </head>
+  <body>
+    <main class="kb-clippy-app">
+      <form class="reminder-controls" id="reminder-form">
+        <label for="reminder-time">Reminder time</label>
+        <input id="reminder-time" name="reminder-time" type="datetime-local" required />
+        <label for="reminder-repeat">Repeat</label>
+        <select id="reminder-repeat" name="reminder-repeat">
+          <option value="once">Once</option>
+          <option value="daily">Every day</option>
+          <option value="weekday">Every weekday</option>
+        </select>
+        <button type="submit">Set reminder</button>
+        <p id="reminder-status" role="status" aria-live="polite"></p>
+      </form>
+
+      <div class="clippy-scene">
+        <aside class="speech-bubble" id="speech-bubble" role="dialog" aria-live="polite" aria-label="KB Clippy reminder" hidden>
+          <button class="speech-bubble__close" id="speech-bubble-close" type="button" aria-label="Close reminder">&times;</button>
+          <p id="reminder-message"></p>
+        </aside>
+
+        <svg class="kb-clippy" width="987" height="1334" viewBox="0 0 987 1334" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="KB Clippy">
+        <g id="kb-clippy">
+          <circle id="kb-body" cx="493.5" cy="840" r="493.5" fill="url(#paint0_radial_3310_5389)"/>
+          <g id="kb-handle">
+            <path id="Rectangle 47" d="M145.549 63.2872C139.781 30.2498 165.207 0 198.744 0H791.525C824.632 0 849.944 29.5184 844.893 62.2376L784.5 453.5C785.296 448.343 782.945 443.207 778.52 440.439L745.396 419.722C739.967 416.327 733.977 413.924 727.707 412.626L677.603 402.255C674.002 401.51 670.335 401.134 666.657 401.134H506.188H330.688L268.248 409.885C267.213 410.03 266.206 410.328 265.26 410.77L211.067 436.06C209.762 436.669 208.621 434.965 209.681 433.99C209.997 433.699 210.143 433.268 210.069 432.846L145.549 63.2872Z" fill="url(#paint1_radial_3310_5389)"/>
+            <path id="Union" d="M683.701 81.5C707.867 81.5 726.305 103.54 722.501 127.881L685.022 367.733C681.983 387.185 665.534 401.5 646.221 401.5H355.562C336.907 401.5 320.824 388.121 317.074 369.482L268.816 129.63C263.816 104.778 282.43 81.5003 307.304 81.5H683.701Z" fill="white"/>
+          </g>
+          <g id="color-band-right">
+            <path d="M677.013 330.36C678.11 326.081 682.469 323.5 686.749 324.597L798.951 353.356C803.23 354.453 805.811 358.812 804.714 363.091L786.209 435.288C784.678 441.263 777.221 443.343 772.568 439.294C741.943 412.642 712.29 403.608 668.442 412.782C662.436 414.039 656.949 408.643 658.472 402.699L677.013 330.36Z" fill="#0F05CE"/>
+            <path d="M788.137 427.881C786.828 432.917 781.136 435.383 776.567 432.894L728.83 406.886C727.734 406.289 726.514 405.956 725.266 405.915L668.039 404.032C662.97 403.865 659.333 399.084 660.526 394.154L677.34 324.688L680.086 315.718C680.945 312.91 683.281 310.789 686.167 310.248C737.809 300.562 764.02 308.716 805.644 341.925C808.088 343.875 809.136 347.09 808.349 350.116L788.137 427.881Z" fill="#0F05CE"/>
+          </g>
+          <g id="color-band-left">
+            <path d="M190.983 357.683C189.822 353.42 192.336 349.023 196.599 347.861L308.353 317.411C312.616 316.25 317.013 318.764 318.175 323.027L337.768 394.935C339.39 400.887 333.935 406.38 327.889 405.159C288.094 397.125 257.85 403.926 224.265 433.572C219.665 437.632 212.228 435.653 210.615 429.733L190.983 357.683Z" fill="#0F05CE"/>
+            <path d="M335.784 387.543C337.135 392.568 333.405 397.525 328.203 397.619L273.85 398.601C272.602 398.624 271.376 398.938 270.272 399.519L219.59 426.164C215.101 428.524 209.577 426.165 208.178 421.29L188.464 352.59L186.418 343.435C185.777 340.569 186.759 337.571 189.001 335.674C229.109 301.732 255.925 295.867 308.523 304.166C311.611 304.653 314.111 306.93 314.923 309.95L335.784 387.543Z" fill="#0F05CE"/>
+          </g>
+          <g id="weight-display">
+            <circle id="Ellipse 36" cx="512.5" cy="941" r="194.5" fill="#525252"/>
+            <g id="24KG" filter="url(#filter0_i_3310_5389)">
+              <path d="M423.488 987.5H367.355V979.355L390.266 956.094C394.523 951.797 398.098 947.969 400.988 944.609C403.918 941.25 406.145 937.949 407.668 934.707C409.191 931.426 409.953 927.832 409.953 923.926C409.953 919.082 408.508 915.391 405.617 912.852C402.766 910.273 398.996 908.984 394.309 908.984C390.207 908.984 386.574 909.688 383.41 911.094C380.246 912.5 377.004 914.492 373.684 917.07L368.469 910.508C370.734 908.594 373.195 906.895 375.852 905.41C378.547 903.926 381.418 902.754 384.465 901.895C387.551 901.035 390.832 900.605 394.309 900.605C399.582 900.605 404.133 901.523 407.961 903.359C411.789 905.195 414.738 907.812 416.809 911.211C418.918 914.609 419.973 918.652 419.973 923.34C419.973 927.871 419.074 932.09 417.277 935.996C415.48 939.863 412.961 943.711 409.719 947.539C406.477 951.328 402.688 955.352 398.352 959.609L379.719 978.184V978.594H423.488V987.5ZM496.438 967.637H483.605V987.5H474.113V967.637H432.688V959.434L473.469 901.367H483.605V958.848H496.438V967.637ZM474.113 958.848V930.84C474.113 928.691 474.133 926.758 474.172 925.039C474.211 923.281 474.27 921.66 474.348 920.176C474.426 918.652 474.484 917.207 474.523 915.84C474.602 914.473 474.66 913.125 474.699 911.797H474.23C473.488 913.359 472.629 915.02 471.652 916.777C470.715 918.496 469.758 920.039 468.781 921.406L442.355 958.848H474.113ZM572.258 987.5H560.48L529.602 945.84L520.461 954.043V987.5H510.5V901.836H520.461V944.551C522.688 942.012 524.973 939.492 527.316 936.992C529.66 934.453 531.984 931.895 534.289 929.316L559.309 901.836H570.969L536.867 938.984L572.258 987.5ZM620.598 942.617H650.539V984.16C646.047 985.684 641.418 986.816 636.652 987.559C631.926 988.301 626.633 988.672 620.773 988.672C611.867 988.672 604.348 986.895 598.215 983.34C592.121 979.785 587.492 974.727 584.328 968.164C581.164 961.562 579.582 953.73 579.582 944.668C579.582 935.801 581.32 928.066 584.797 921.465C588.312 914.863 593.371 909.746 599.973 906.113C606.613 902.441 614.582 900.605 623.879 900.605C628.645 900.605 633.156 901.055 637.414 901.953C641.711 902.812 645.695 904.043 649.367 905.645L645.559 914.316C642.395 912.949 638.898 911.777 635.07 910.801C631.281 909.824 627.355 909.336 623.293 909.336C616.301 909.336 610.305 910.781 605.305 913.672C600.344 916.562 596.535 920.645 593.879 925.918C591.262 931.191 589.953 937.441 589.953 944.668C589.953 951.816 591.105 958.047 593.41 963.359C595.715 968.633 599.309 972.734 604.191 975.664C609.074 978.594 615.363 980.059 623.059 980.059C626.926 980.059 630.246 979.844 633.02 979.414C635.793 978.945 638.312 978.398 640.578 977.773V951.523H620.598V942.617Z" fill="#A5A5A5"/>
+            </g>
+          </g>
+          <circle id="r-eye-white" cx="694" cy="578.5" r="177" fill="white"/>
+          <circle id="l-eye-white" cx="310" cy="578.5" r="177" fill="white"/>
+          <circle id="r-pupil" cx="665" cy="599.5" r="84" fill="black"/>
+          <circle id="l-pupil" cx="355" cy="602.5" r="84" fill="black"/>
+          <path id="r-lid-bottom" d="M513 641.5C513 656.471 517.669 671.295 526.74 685.126C535.811 698.957 549.106 711.524 565.867 722.11C582.628 732.696 602.526 741.093 624.426 746.822C646.325 752.551 669.796 755.5 693.5 755.5C717.204 755.5 740.675 752.551 762.574 746.822C784.474 741.093 804.372 732.696 821.133 722.11C837.894 711.524 851.189 698.957 860.26 685.126C869.331 671.295 874 656.471 874 641.5H854.026C854.026 654.814 849.874 667.998 841.806 680.298C833.739 692.599 821.915 703.775 807.009 713.19C792.103 722.604 774.406 730.072 754.931 735.167C735.455 740.262 714.581 742.885 693.5 742.885C672.419 742.885 651.545 740.262 632.069 735.167C612.594 730.072 594.897 722.604 579.991 713.19C565.085 703.775 553.261 692.599 545.194 680.298C537.126 667.998 532.974 654.814 532.974 641.5H513Z" fill="#626364"/>
+          <path id="l-lid-btm" d="M122 641.5C122 656.471 126.669 671.295 135.74 685.126C144.811 698.957 158.106 711.524 174.867 722.11C191.628 732.696 211.526 741.093 233.426 746.822C255.325 752.551 278.796 755.5 302.5 755.5C326.204 755.5 349.675 752.551 371.574 746.822C393.474 741.093 413.372 732.696 430.133 722.11C446.894 711.524 460.189 698.957 469.26 685.126C478.331 671.295 483 656.471 483 641.5H463.026C463.026 654.814 458.874 667.998 450.806 680.298C442.739 692.599 430.915 703.775 416.009 713.19C401.103 722.604 383.406 730.072 363.931 735.167C344.455 740.262 323.581 742.885 302.5 742.885C281.419 742.885 260.545 740.262 241.069 735.167C221.594 730.072 203.897 722.604 188.991 713.19C174.085 703.775 162.261 692.599 154.194 680.298C146.126 667.998 141.974 654.814 141.974 641.5H122Z" fill="#626364"/>
+          <path id="r-lid-top" d="M874 515.5C874 500.529 869.331 485.705 860.26 471.874C851.189 458.043 837.894 445.476 821.133 434.89C804.372 424.304 784.474 415.907 762.574 410.178C740.675 404.449 717.204 401.5 693.5 401.5C669.796 401.5 646.325 404.449 624.426 410.178C602.526 415.907 582.628 424.304 565.867 434.89C549.106 445.476 535.811 458.043 526.74 471.874C517.669 485.705 513 500.529 513 515.5H532.974C532.974 502.186 537.126 489.002 545.194 476.702C553.261 464.401 565.085 453.225 579.991 443.81C594.897 434.396 612.594 426.928 632.069 421.833C651.545 416.738 672.419 414.115 693.5 414.115C714.581 414.115 735.455 416.738 754.931 421.833C774.406 426.928 792.103 434.396 807.009 443.81C821.915 453.225 833.739 464.401 841.806 476.702C849.874 489.002 854.026 502.186 854.026 515.5H874Z" fill="#626364"/>
+          <path id="l-lid-top" d="M483 515.5C483 500.529 478.331 485.705 469.26 471.874C460.189 458.043 446.894 445.476 430.133 434.89C413.372 424.304 393.474 415.907 371.574 410.178C349.675 404.449 326.204 401.5 302.5 401.5C278.796 401.5 255.325 404.449 233.426 410.178C211.526 415.907 191.628 424.304 174.867 434.89C158.106 445.476 144.811 458.043 135.74 471.874C126.669 485.705 122 500.529 122 515.5H141.974C141.974 502.186 146.126 489.002 154.194 476.702C162.261 464.401 174.085 453.225 188.991 443.81C203.897 434.396 221.594 426.928 241.069 421.833C260.545 416.738 281.419 414.115 302.5 414.115C323.581 414.115 344.455 416.738 363.931 421.833C383.406 426.928 401.103 434.396 416.009 443.81C430.915 453.225 442.739 464.401 450.806 476.702C458.874 489.002 463.026 502.186 463.026 515.5H483Z" fill="#626364"/>
+        </g>
+        <defs>
+          <filter id="filter0_i_3310_5389" x="367.355" y="900.605" width="285.184" height="90.0664" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+            <feOffset dx="2" dy="2"/>
+            <feGaussianBlur stdDeviation="1"/>
+            <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"/>
+            <feBlend mode="normal" in2="shape" result="effect1_innerShadow_3310_5389"/>
+          </filter>
+          <radialGradient id="paint0_radial_3310_5389" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(226 666) rotate(28.5905) scale(803.474)">
+            <stop stop-color="#E8E8E8"/>
+            <stop offset="0.317308" stop-color="#919191"/>
+            <stop offset="0.576923" stop-color="#595959"/>
+            <stop offset="0.769231" stop-color="#414243"/>
+            <stop offset="1" stop-color="#303133"/>
+          </radialGradient>
+          <radialGradient id="paint1_radial_3310_5389" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(231 172.5) rotate(36.661) scale(877.606 1316.41)">
+            <stop offset="0.0240385" stop-color="#C2C2C2"/>
+            <stop offset="0.203185" stop-color="#8D8D8D"/>
+            <stop offset="0.633348" stop-color="#5E5F60"/>
+            <stop offset="0.705362" stop-color="#464749"/>
+            <stop offset="0.809429" stop-color="#464749"/>
+            <stop offset="1" stop-color="#303133"/>
+          </radialGradient>
+        </defs>
+        </svg>
+      </div>
+    </main>
+
+    <script>
+      const form = document.querySelector("#reminder-form");
+      const reminderInput = document.querySelector("#reminder-time");
+      const repeatInput = document.querySelector("#reminder-repeat");
+      const status = document.querySelector("#reminder-status");
+      const clippy = document.querySelector("#kb-clippy");
+      const speechBubble = document.querySelector("#speech-bubble");
+      const reminderMessage = document.querySelector("#reminder-message");
+      const closeBubble = document.querySelector("#speech-bubble-close");
+      let reminderTimer;
+      let activeReminderTime = null;
+      let activeRecurrence = "once";
+      let messageIndex = 0;
+
+      const reminderMessages = [
+        "It looks like you’ve been sitting for a while. Is it time to do some squats?",
+        "I noticed your kettlebell hasn’t moved today. Neither have you. Time for some swings?",
+        "It looks like it's time to workout. Remember how good that felt yesterday?"
+      ];
+
+      const setReminderMinimum = () => {
+        const now = new Date();
+        now.setSeconds(0, 0);
+        const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+        reminderInput.min = localTime.toISOString().slice(0, 16);
+      };
+
+      const triggerReminder = () => {
+        clippy.classList.remove("reminder-active");
+        void clippy.getBoundingClientRect();
+        clippy.classList.add("reminder-active");
+        reminderMessage.textContent = reminderMessages[messageIndex];
+        messageIndex = (messageIndex + 1) % reminderMessages.length;
+        speechBubble.hidden = false;
+
+        if (activeRecurrence !== "once") {
+          const nextTime = getNextReminderTime(new Date(), activeReminderTime, activeRecurrence);
+          status.textContent = `Next reminder: ${nextTime.toLocaleString()}.`;
+          scheduleReminder(nextTime);
+        } else {
+          status.textContent = "Reminder complete.";
+        }
+      };
+
+      const getNextReminderTime = (after, referenceTime, recurrence) => {
+        const nextTime = new Date(after);
+        nextTime.setSeconds(0, 0);
+        nextTime.setHours(referenceTime.getHours(), referenceTime.getMinutes(), 0, 0);
+
+        if (nextTime <= after) {
+          nextTime.setDate(nextTime.getDate() + 1);
+        }
+
+        if (recurrence === "weekday") {
+          while (nextTime.getDay() === 0 || nextTime.getDay() === 6) {
+            nextTime.setDate(nextTime.getDate() + 1);
+          }
+        }
+
+        return nextTime;
+      };
+
+      const scheduleReminder = (reminderTime) => {
+        const delay = reminderTime.getTime() - Date.now();
+
+        if (delay <= 2147483647) {
+          reminderTimer = setTimeout(triggerReminder, Math.max(delay, 0));
+        } else {
+          reminderTimer = setTimeout(
+            () => scheduleReminder(reminderTime),
+            2147483647
+          );
+        }
+      };
+
+      setReminderMinimum();
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        clearTimeout(reminderTimer);
+        setReminderMinimum();
+
+        const reminderTime = new Date(reminderInput.value);
+        const delay = reminderTime.getTime() - Date.now();
+
+        if (Number.isNaN(reminderTime.getTime()) || delay < 0) {
+          status.textContent = "Choose a future reminder time.";
+          return;
+        }
+
+        activeRecurrence = repeatInput.value;
+        activeReminderTime =
+          activeRecurrence === "weekday"
+            ? getNextReminderTime(new Date(), reminderTime, "weekday")
+            : reminderTime;
+        speechBubble.hidden = true;
+
+        const recurrenceLabel = {
+          once: "once",
+          daily: "every day",
+          weekday: "every weekday"
+        }[activeRecurrence];
+
+        status.textContent = `Reminder set ${recurrenceLabel} for ${activeReminderTime.toLocaleString()}.`;
+        scheduleReminder(activeReminderTime);
+      });
+
+      closeBubble.addEventListener("click", () => {
+        speechBubble.hidden = true;
+      });
+
+      clippy.addEventListener("animationend", (event) => {
+        if (event.animationName === "reminder-bounce") {
+          clippy.classList.remove("reminder-active");
+        }
+      });
+    </script>
+  </body>
+</html>
