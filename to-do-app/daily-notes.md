@@ -12,8 +12,16 @@
 - [x] PR once dashboard and reset/discard bugs are fixed
 
 ----------------------------------------------------------------------------------------------
+### 11/19/2026
+preliminary restructuring of UI: 
+- moved logo, search and sort to header
+- Moved sidbar to main and expanded header across viewport
+- creating depth and bordered containers to dashboards
+
+
+
 ### 11/17/2026
-- Keep meaning to fix innerHTML/textContent: project/list/dashboard rendering still interpolates raw titles into innerHTML.
+- ~~Keep meaning to fix innerHTML/textContent: project/list/dashboard rendering still interpolates raw titles into innerHTML.~~
 
 
 
