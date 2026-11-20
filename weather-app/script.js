@@ -109,8 +109,8 @@ async function showWeather (city) {
     headerDisplay.textContent = weatherData.name;
     mainWeather.textContent = getWeatherMain(mainWeatherArr);
     weatherIcon.src = getIconURL(mainWeatherArr);
-    mainTempEl.innerHTML = getTemp(weatherData);
-    feelsLikeEl.innerHTML = getFeels(weatherData);
+    mainTempEl.textContent = getTemp(weatherData);
+    feelsLikeEl.textContent = getFeels(weatherData);
     humidity.textContent = getHumidity(weatherData);
     wind.textContent = getWindSpeed(weatherData);
     gust.textContent = getGust(weatherData);

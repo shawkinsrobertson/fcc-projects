@@ -56,12 +56,12 @@ const connectKeydown = (key) => {
   
   const pad = Array.from(drumPad).find(pad => pad.id == key.toUpperCase());
   playSound(pad.id);
-  display.innerText = findSoundName(pad.id);
+  display.textContent = findSoundName(pad.id);
 }
 
 
 drumPad.forEach(pad => 
 pad.addEventListener("click", (event) => {
-  playSound(event.target.id); display.innerText = findSoundName(event.target.id)}));
+  playSound(event.target.id); display.textContent = findSoundName(event.target.id)}));
 
 document.addEventListener("keydown", (event) => {connectKeydown(event.key)});

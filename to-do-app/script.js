@@ -10,12 +10,6 @@ const projectContainer = document.getElementById('project-container');
 const listContainer = document.getElementById('list-container');
 const projectDashboard = document.getElementById('project-dashboard');
 const listDashboard = document.getElementById('list-dashboard');
-const projectTaskList = projectDashboard.querySelector('.filtered-task-list');
-const listTaskList = listDashboard.querySelector('.filtered-task-list');
-const projectDashboardDescription = projectDashboard.querySelector('.dashboard-description');
-const projectDashboardTitle = projectDashboard.querySelector('.dashboard-title');
-const listDashboardDescription = listDashboard.querySelector('.dashboard-description');
-const listDashboardTitle = listDashboard.querySelector('.dashboard-title');
 const todoApp = document.querySelector('.todo-app');
 const createBtnDropdown = document.getElementById('button-dropdown');
 const dashboardHeader = document.querySelectorAll('.dashboard-header');
@@ -38,7 +32,6 @@ const deleteListBtn = document.getElementById('delete-list-btn');
 const editProjectBtn = document.getElementById('edit-project-btn');
 const deleteProjectBtn = document.getElementById('delete-project-btn');
 const sidebarCloseBtn = document.getElementById('logo');
-const addTaskInlineBtn = document.querySelectorAll('.add-task-inline-btn');
 const search = document.getElementById('search');
 const sortAlphaBtn = document.getElementById('sort-alpha');
 const sortDueFirstBtn = document.getElementById('sort-due-first');
@@ -56,8 +49,6 @@ const descriptionInput = document.getElementById('task-description-input');
 const projectInput = document.getElementById('task-project-input');
 const listInput = document.getElementById('task-list-input');
 const parentInput = document.getElementById('task-parent-input');
-const projectTitle = projectDashboard.querySelector('.dashboard-title');
-const listTitle = listDashboard.querySelector('.dashboard-title');
 const projectFormTitle = document.getElementById('project-title-input');
 const projectFormDate = document.getElementById('project-date-input');
 const projectFormDescription = document.getElementById('project-description-input');
@@ -85,7 +76,7 @@ let dueDateSort = false;
 //GENERAL HELPERS ---------------------------------------------------------------------
 const reset = (type) => {
     if(type === 'task'){
-        addOrUpdateTaskBtn.innerText = 'Add Task';
+        addOrUpdateTaskBtn.textContent = 'Add Task';
         titleInput.value = '';
         dateInput.value = '';
         projectInput.value = '';
@@ -95,7 +86,7 @@ const reset = (type) => {
     };
 
     if(type === 'project') {
-        addOrUpdateProjectBtn.innerText = 'Create Project';
+        addOrUpdateProjectBtn.textContent = 'Create Project';
         projectFormTitle.value = '';
         projectFormDate.value = '';
         projectFormDescription.value = '';
@@ -103,7 +94,7 @@ const reset = (type) => {
     };
 
     if(type === 'list') {
-        addOrUpdateListBtn.innerText = 'Create List';
+        addOrUpdateListBtn.textContent = 'Create List';
         listFormTitle.value = '';
         listFormDate.value = '';
         listFormDescription.value   = '';
@@ -213,7 +204,8 @@ const addOrUpdateTask = () => {
     localStorage.setItem('tasks', JSON.stringify(taskData));
     if(visibleDashboard) {
         const tasksToRender = taskData.filter(tasks => tasks.project === projectTitle);
-        projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+        projectDashboard.querySelector('.filtered-task-list')
+            .replaceChildren(...tasksToRender.map(createTaskElement));
         feather.replace();
     }else {
         updateTaskContainer();
@@ -249,7 +241,7 @@ const editTask = (buttonEl) => {
     listInput.value = currentTask.list;
     parentInput.value = parentTaskName.title;
     descriptionInput.value = currentTask.description;
-    addOrUpdateTaskBtn.innerText = 'Update Task';
+    addOrUpdateTaskBtn.textContent = 'Update Task';
 
 };
 
@@ -439,7 +431,7 @@ const createTaskElement = (task) => {
 
 //PROJECTS ---------------------------------------------------------------------
 const addOrUpdateProject = () => {
-    if(!projectFormTitle.value.trim() && !projectTitle){
+    if(!projectFormTitle.value.trim() && !projectDashboard.querySelector('.dashboard-title').textContent.trim()){
         alert('Please give your project a name; otherwise, it cannot materialize.');
         return;
     };
@@ -475,20 +467,20 @@ const createProject = () => {
 
 const editProject = (buttonEl) => {
     const projectCard = buttonEl.closest('[data-project]');
-    const lookupTitle = projectCard.querySelector('.dashboard-title').innerHTML;
+    const lookupTitle = projectCard.querySelector('.dashboard-title').textContent;
     projectForm.classList.toggle('hidden');
     const dataArrIndex = projectData.findIndex(project => project.title === lookupTitle);
     currentProject = projectData[dataArrIndex];
     projectFormTitle.value = currentProject.title;
     projectFormDate.value = currentProject.date;
     projectFormDescription.value = currentProject.description;
-    addOrUpdateProjectBtn.innerText = 'Update Project';
+    addOrUpdateProjectBtn.textContent = 'Update Project';
 
 };
 
 const deleteProject = (buttonEl) => {
     const projectCard = buttonEl.closest('[data-project]');
-    const lookupTitle = projectCard.querySelector('.dashboard-title').innerHTML;
+    const lookupTitle = projectCard.querySelector('.dashboard-title').textContent;
     console.log(lookupTitle)
     const dataArrIndex = projectData.findIndex(project => project.title === lookupTitle);
     const projectToClear = projectData[dataArrIndex];
@@ -511,17 +503,22 @@ const deleteProject = (buttonEl) => {
 };
 
 const updateProjectContainer = () => {
-     projectContainer.innerHTML = '';
-    projectData.forEach(({title}) => projectContainer.innerHTML += `
-        <div class='project' id='${title}'>
-            <p class='project-title'>${title}</p>
-        </div>
-    `)
+    const projectElements = projectData.map(({ title }) => {
+        const projectCard = document.createElement('div');
+        projectCard.className = 'project';
+        projectCard.id = title;
+        const projectTitle = document.createElement('p');
+        projectTitle.className = 'project-title';
+        projectTitle.textContent = title;
+        projectCard.append(projectTitle);
+        return projectCard;
+    });
+    projectContainer.replaceChildren(...projectElements);
 };
 
 //LISTS ---------------------------------------------------------------------
 const addOrUpdateList = () => {
-    if(!listFormTitle.value.trim() && !listTitle){
+    if(!listFormTitle.value.trim() && !listDashboard.querySelector('.dashboard-title').textContent.trim()){
         alert('Please give your list a name; otherwise, it cannot materialize.');
         return;
     };
@@ -544,7 +541,7 @@ const addOrUpdateList = () => {
     updateDashboard('list');
     listForm.classList.toggle('hidden');
     listDashboard.style.display = 'flex';
-    tasksContainer.innerHTML = '';
+    tasksContainer.textContent = '';
 };
 
 const createList = () => {
@@ -560,19 +557,19 @@ const createList = () => {
 
 const editList = (buttonEl) => {
     const listCard = buttonEl.closest('[data-list]');
-    const lookupTitle = listCard.querySelector('.dashboard-title').innerHTML;
+    const lookupTitle = listCard.querySelector('.dashboard-title').textContent;
     listForm.classList.toggle('hidden');
     const dataArrIndex = listData.findIndex(list => list.title === lookupTitle);
     currentList = listData[dataArrIndex];
     listFormTitle.value = currentList.title;
     listFormDate.value = currentList.date;
     listFormDescription.value = currentList.description;
-    addOrUpdateListBtn.innerText = 'Update List';
+    addOrUpdateListBtn.textContent = 'Update List';
 }
 
 const deleteList = (buttonEl) => {
     const listCard = buttonEl.closest('[data-list]');
-    const lookupTitle = listCard.querySelector('.dashboard-title').innerHTML;
+    const lookupTitle = listCard.querySelector('.dashboard-title').textContent;
     console.log(lookupTitle)
     const dataArrIndex = listData.findIndex(list => list.title === lookupTitle);
     const listToClear = listData[dataArrIndex];
@@ -594,70 +591,109 @@ const deleteList = (buttonEl) => {
 };
 
 const updateListContainer = () => {
-     listContainer.innerHTML = '';
-    listData.forEach(({id, title}) => listContainer.innerHTML += `
-        <div class='list' id='${title}'>
-            <p class='list-title'>${title}</p>
-        </div>
-    `)
+    const listElements = listData.map(({ title }) => {
+        const listCard = document.createElement('div');
+        listCard.className = 'list';
+        listCard.id = title;
+        const listTitle = document.createElement('p');
+        listTitle.className = 'list-title';
+        listTitle.textContent = title;
+        listCard.append(listTitle);
+        return listCard;
+    });
+    listContainer.replaceChildren(...listElements);
 };
 
 
 //UI RENDERING, ALL TYPES ---------------------------------------------------------------------
 const updateDashboard = (type) => {
     if(type === 'project') {
-        projectDashboardTitle.innerHTML = projectFormTitle.value;
-        projectDashboardDescription.innerHTML = projectFormDescription.value;
+        projectDashboard.querySelector('.dashboard-title').textContent = projectFormTitle.value;
+        projectDashboard.querySelector('.dashboard-description').textContent = projectFormDescription.value;
 
     };
     if(type === 'list') {
-        listDashboardTitle.innerHTML = listFormTitle.value;
-        listDashboardDescription.innerHTML = listFormDescription.value;
+        listDashboard.querySelector('.dashboard-title').textContent = listFormTitle.value;
+        listDashboard.querySelector('.dashboard-description').textContent = listFormDescription.value;
     };
 };
 
+const createDashboardContent = (title, description, tasks) => {
+    const content = document.createDocumentFragment();
+    const header = document.createElement('div');
+    header.className = 'dashboard-header';
+
+    const titleAndAdd = document.createElement('div');
+    titleAndAdd.className = 'title-and-add';
+
+    const dashboardTitle = document.createElement('h3');
+    dashboardTitle.className = 'dashboard-title';
+    dashboardTitle.textContent = title;
+
+    const addTaskButton = document.createElement('button');
+    addTaskButton.className = 'add-task-inline-btn btn';
+    addTaskButton.textContent = '+ add task';
+    titleAndAdd.append(dashboardTitle, addTaskButton);
+
+    const dashboardDescription = document.createElement('p');
+    dashboardDescription.className = 'dashboard-description';
+    dashboardDescription.textContent = description || '';
+    header.append(titleAndAdd, dashboardDescription);
+
+    const taskList = document.createElement('div');
+    taskList.className = 'filtered-task-list';
+    taskList.replaceChildren(...tasks.map(createTaskElement));
+
+    content.append(header, taskList);
+    return content;
+};
+
+const createProjectElement = (project, tasks) => {
+    return createDashboardContent(project.title, project.description, tasks);
+};
+
+const createListElement = (list, tasks) => {
+    return createDashboardContent(list.title, list.description, tasks);
+};
+
 const renderProject = (e) => {
-    tasksContainer.innerHTML = '';
-    projectTaskList.innerHTML = '';
+    tasksContainer.textContent = '';
     listDashboard.style.display = 'none';
     const projectElement = e.target.closest('.project'); 
     const projectToRender = projectData.find(project => project.title === projectElement.id);
     const tasksToRender = taskData.filter(tasks => tasks.project === projectElement.id);
+    const controls = projectDashboard.querySelector('.form-btn-div');
+    projectDashboard.replaceChildren(controls, createProjectElement(projectToRender, tasksToRender));
     projectDashboard.style.display = 'flex';
     projectDashboard.dataset.project = 'project';
-    projectTitle.innerHTML = projectToRender.title;
-    projectDashboardDescription.innerHTML = projectToRender.description ? projectToRender.description : '';
-    projectTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
     updateSubtaskContainer();
     feather.replace();
 };
 
 const renderList = (e) => {
-   tasksContainer.innerHTML = '';
-   listTaskList.innerHTML = '';
+   tasksContainer.textContent = '';
    projectDashboard.style.display = 'none';
-   listDashboard.style.display = 'flex';
     const listElement = e.target.closest('.list');
     const listToRender = listData.find(list => list.title === listElement.id);
-    listTitle.innerHTML = listToRender.title;
-    listDashboard.dataset.list = 'list';
-    listDashboardDescription.innerHTML = listToRender.description ? listToRender.description : '';
     const tasksToRender = taskData.filter(tasks => tasks.list === listElement.id);
-    listTaskList.replaceChildren(...tasksToRender.map(createTaskElement));
+    const controls = listDashboard.querySelector('.form-btn-div');
+    listDashboard.replaceChildren(controls, createListElement(listToRender, tasksToRender));
+    listDashboard.style.display = 'flex';
+    listDashboard.dataset.list = 'list';
     feather.replace();
 
 };
 
 const clearDashboard = (type) => {
     if(type === 'project') {
-        projectDashboardTitle.innerHTML = '';
-        projectDashboardDescription.innerHTML = '';
+        projectDashboard.querySelector('.dashboard-title').textContent = '';
+        projectDashboard.querySelector('.dashboard-description').textContent = '';
         projectDashboard.style.display = 'none';
 
     };
     if(type === 'list') {
-        listDashboardTitle.innerHTML = '';
-        listDashboardDescription.innerHTML = '';
+        listDashboard.querySelector('.dashboard-title').textContent = '';
+        listDashboard.querySelector('.dashboard-description').textContent = '';
         listDashboard.style.display = 'none';
     };
 }
@@ -764,8 +800,12 @@ sidebarCloseBtn.addEventListener('click', () => {
     const isCollapsed = sidebar.classList.toggle('collapsed');
     const projectIconBtn = document.querySelector('#projects-header-sidebar .icon-btn');
     const listIconBtn = document.querySelector('#lists-header-sidebar .icon-btn');
-    projectIconBtn.innerHTML = `<i data-feather="${isCollapsed ? 'folder' : 'folder-plus'}"></i>`;
-    listIconBtn.innerHTML = `<i data-feather="${isCollapsed ? 'file' : 'file-plus'}"></i>`;
+    const projectIcon = document.createElement('i');
+    projectIcon.dataset.feather = isCollapsed ? 'folder' : 'folder-plus';
+    projectIconBtn.replaceChildren(projectIcon);
+    const listIcon = document.createElement('i');
+    listIcon.dataset.feather = isCollapsed ? 'file' : 'file-plus';
+    listIconBtn.replaceChildren(listIcon);
     feather.replace();
 })
 
@@ -781,9 +821,13 @@ todoApp.addEventListener('change', (event) => {
     localStorage.setItem('tasks', JSON.stringify(taskData));
 });
 
-addTaskInlineBtn.forEach(button => button.addEventListener('click', () => {
-    setForm();
-}));
+[projectDashboard, listDashboard].forEach(dashboard => {
+    dashboard.addEventListener('click', (event) => {
+        if(event.target.closest('.add-task-inline-btn')) {
+            setForm();
+        }
+    });
+});
 
 search.addEventListener('input', (e) => { //searches current task list only
     const query = e.target.value.trim().toLowerCase();

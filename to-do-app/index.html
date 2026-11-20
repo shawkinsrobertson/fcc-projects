@@ -10,11 +10,29 @@
 </head>
 
 <body>
+  <header id="site-header">
+    <div id="logo-and-title">
+      <button id="logo" aria-label="close" type="button"><span class="poop">💩</span></button>
+      <h1>Do Shit</h1>
+    </div>
+    <div id="search-and-sort">
+      <input type="search" id="search" name="search" placeholder="search tasks, projects, lists" />
+      <div id="chips">
+        <button id="sort-alpha" class="chip">A-Z</button>
+        <button id="sort-due-first" class="chip">Due: first-last</button>
+      </div>
+    </div>
+    <div class="menu-wrapper">
+      <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">Create</button>
+      <div id="button-dropdown" class="menu-panel">
+        <button id="open-task-form-btn" type="btn">New Task</button>
+        <button id="open-project-form-btn" type="btn">New Project</button>
+        <button id="open-list-form-btn" type="btn">New List</button>
+      </div>
+    </div>
+  </header>
   <main>
     <div class="menu-sidebar">
-      <div id="sidebar-header">
-        <button id="logo" aria-label="close" type="button"><span class="poop">💩</span></button>
-      </div>
       <div class="projects">
         <div id='projects-header-sidebar'>
           <h3>Projects</h3>
@@ -33,24 +51,6 @@
       </div>
     </div>
     <div class="todo-app">
-      <header class="title-and-primarybtn">
-        <h1>Do Shit</h1>
-        <div class="menu-wrapper">
-          <button id="add-new-btn" type='button' aria-label='create new item' aria-controls='button dropdown' aria-expanded="false">Create</button>
-          <div id="button-dropdown" class="menu-panel">
-            <button id="open-task-form-btn" type="btn">New Task</button>
-            <button id="open-project-form-btn" type="btn">New Project</button>
-            <button id="open-list-form-btn" type="btn">New List</button>
-          </div>
-        </div>
-    </header>
-    <div id="search-and-sort">
-          <input type="search" id="search" name="search" placeholder="search tasks, projects, lists" />
-          <div id="chips">
-            <button id="sort-alpha" class="chip">A-Z</button>
-            <button id="sort-due-first" class="chip">Due: first-last</button>
-          </div>
-        </div>
       <div id="task-form-home">
         <form class="form hidden" id="task-form" data-type="task">
           <div class="task-form-header">
